@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutas de Avistamiento de Aves</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Rutas de Avistamiento de Aves</h1>
+        <!-- Se inicializa oculto para cumplir con la restricción de ocultamiento previo al login -->
+        <nav id="main-nav" style="display: none;">
+            <ul>
+                <li><a href="#/inicio">Inicio</a></li>
+                <li><a href="#/aves">Aves</a></li>
+                <li><a href="#/rutas">Rutas</a></li>
+                <li><a href="#/recomendaciones">Recomendaciones</a></li>
+                <li><a href="#/favoritos">Favoritos</a></li>
+                <li class="sesion-menu">
+                    <a href="#/logout" id="link-sesion">
+                        <span class="icono-usuario">👤</span>
+                        <span class="texto-sesion">Cerrar sesión</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="app-content">
+    </main>
+
+    <footer>
+        <p>© 2026 Rutas de Avistamiento de Aves - Popayán, Cauca, Colombia</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,858 @@
+/* ENCABEZADO PRINCIPAL */
+
+.header {
+    background-color: #2e7d32;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0 0 15px;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+/* MENÚ DE NAVEGACIÓN */
+
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 6px 0;
+    transition: color 0.3s ease;
+}
+
+.nav a:hover {
+    text-decoration: underline;
+}
+
+/* AJUSTES PARA CELULARES */
+
+@media (max-width: 600px) {
+    .header {
+        padding: 16px 12px;
+    }
+
+    .header h1 {
+        font-size: 23px;
+    }
+
+    .nav {
+        gap: 10px 18px;
+    }
+
+    .nav a {
+        font-size: 13px;
+    }
+}
+
+/* ========================================
+   INICIO: BANNER PRINCIPAL
+   ======================================== */
+
+.hero {
+    min-height: 380px;
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.35),
+            rgba(0, 0, 0, 0.35)
+        ),
+        url("imagenes/pava_de_monte.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    margin-bottom: 35px;
+    padding: 20px;
+}
+
+/* Contenido del banner */
+
+.hero-contenido {
+    width: 100%;
+    max-width: 650px;
+    padding: 20px;
+}
+
+.hero h2 {
+    color: white;
+    font-size: clamp(26px, 4vw, 34px);
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: clamp(14px, 2vw, 16px);
+    margin-bottom: 25px;
+}
+
+/* Botones */
+
+.boton {
+    display: inline-block;
+    background-color: #2e7d32;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.boton:hover {
+    background-color: #1b5e20;
+}
+
+/* ========================================
+   INICIO: TARJETAS INFORMATIVAS
+   ======================================== */
+
+.contenedor-info {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, 280px), 1fr)
+    );
+    gap: 25px;
+}
+
+.info {
+    min-width: 0;
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.info:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.info h3 {
+    margin-top: 0;
+    color: #2e7d32;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info p {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.info a {
+    color: #2e7d32;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.info a:hover {
+    text-decoration: underline;
+}
+
+/* ========================================
+   DISEÑO RESPONSIVE: INICIO
+   ======================================== */
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 320px;
+        border-radius: 12px;
+    }
+
+    .hero-contenido {
+        padding: 10px;
+    }
+
+    .contenedor-info {
+        gap: 18px;
+    }
+
+    .info {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        min-height: 280px;
+        padding: 15px;
+    }
+
+    .hero h2 {
+        font-size: 25px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .boton {
+        padding: 10px 20px;
+    }
+
+    .contenedor-info {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .info {
+        padding: 18px;
+    }
+}
+
+/* TARJETAS DE AVES */
+
+.contenedor-aves,
+.aves__contenedor {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, 250px), 1fr)
+    );
+    gap: 25px;
+    align-items: stretch;
+}
+
+.ave {
+    min-width: 0;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ave:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+}
+
+/* Imágenes de las aves */
+
+.ave img {
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+    background-color: #e8e8e8;
+}
+
+/* Información de cada ave */
+
+.ave h3 {
+    color: #2e7d32;
+    font-size: 18px;
+    margin: 15px 15px 5px;
+}
+
+.ave p {
+    margin: 4px 15px;
+    font-size: 14px;
+    color: #444;
+    overflow-wrap: anywhere;
+}
+
+/* Botón para agregar a favoritos */
+
+.boton-favorito {
+    margin: auto 15px 15px;
+    padding: 10px;
+    background-color: white;
+    color: #2e7d32;
+    border: 2px solid #2e7d32;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.boton-favorito:hover {
+    background-color: #2e7d32;
+    color: white;
+}
+
+/* Botón para eliminar de favoritos */
+
+.boton-eliminar-favorito {
+    margin: auto 15px 15px;
+    padding: 10px;
+    background-color: white;
+    color: #b3261e;
+    border: 2px solid #b3261e;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.boton-eliminar-favorito:hover {
+    background-color: #b3261e;
+    color: white;
+}
+
+/* Diseño responsive para tabletas */
+
+@media (max-width: 768px) {
+    .contenedor-aves,
+    .aves__contenedor {
+        gap: 18px;
+    }
+
+    .ave img {
+        height: 200px;
+    }
+}
+
+/* Diseño responsive para celulares */
+
+@media (max-width: 480px) {
+    .contenedor-aves,
+    .aves__contenedor {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .ave img {
+        height: 230px;
+    }
+
+    .ave h3 {
+        font-size: 17px;
+    }
+
+    .boton-favorito,
+    .boton-eliminar-favorito {
+        min-height: 44px;
+    }
+}
+
+/* RUTAS / ZONAS */
+
+.contenedor-rutas,
+.rutas__contenedor {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, 280px), 1fr)
+    );
+    gap: 25px;
+    align-items: stretch;
+}
+
+.ruta {
+    min-width: 0;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ruta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Imágenes responsivas de las rutas */
+
+.ruta img {
+    display: block;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+/* Contenedor de códigos QR */
+
+.qr-container {
+    text-align: center;
+    margin-top: 15px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.qr-container img {
+    display: block;
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+/* Diseño responsive para tabletas */
+
+@media (max-width: 768px) {
+    .contenedor-rutas,
+    .rutas__contenedor {
+        gap: 18px;
+    }
+
+    .ruta {
+        padding: 18px;
+    }
+
+    .ruta img {
+        height: 170px;
+    }
+}
+
+/* Diseño responsive para celulares */
+
+@media (max-width: 480px) {
+    .contenedor-rutas,
+    .rutas__contenedor {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .ruta {
+        padding: 15px;
+    }
+
+    .ruta img {
+        height: 200px;
+    }
+
+    .qr-container img {
+        width: 110px;
+        height: 110px;
+    }
+}
+
+/* =========================================
+   RECOMENDACIONES
+   ========================================= */
+
+.recomendaciones {
+    width: 100%;
+}
+
+.recomendaciones .contenedor-info {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, 260px), 1fr)
+    );
+    gap: 25px;
+    align-items: stretch;
+}
+
+.recomendaciones .info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recomendaciones .info:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+}
+
+/* Imágenes de las recomendaciones */
+
+.recomendaciones .info__imagen {
+    display: block;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Títulos y textos */
+
+.recomendaciones .info h3 {
+    margin: 18px 18px 8px;
+    color: #2e7d32;
+    font-size: 19px;
+}
+
+.recomendaciones .info p {
+    margin: 0 18px 20px;
+    color: #444;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Adaptación para tabletas */
+
+@media (max-width: 768px) {
+    .recomendaciones .contenedor-info {
+        gap: 18px;
+    }
+
+    .recomendaciones .info__imagen {
+        height: 180px;
+    }
+}
+
+/* Adaptación para celulares */
+
+@media (max-width: 480px) {
+    .recomendaciones .contenedor-info {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .recomendaciones .info__imagen {
+        height: 210px;
+    }
+
+    .recomendaciones .info h3 {
+        font-size: 18px;
+    }
+}
+
+/* =========================================
+   FAVORITOS
+   ========================================= */
+
+.favoritos__encabezado {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.favoritos__encabezado h2 {
+    color: #2e7d32;
+    margin-bottom: 10px;
+}
+
+/* Contenedor de aves favoritas */
+
+.favoritos__contenedor {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, 250px), 1fr)
+    );
+    gap: 25px;
+    align-items: stretch;
+}
+
+/* Mensaje cuando no hay favoritos */
+
+.favoritos__mensaje {
+    grid-column: 1 / -1;
+    padding: 20px;
+    margin: 10px 0;
+    background-color: white;
+    color: #555;
+    text-align: center;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Adaptación para tabletas */
+
+@media (max-width: 768px) {
+    .favoritos__contenedor {
+        gap: 18px;
+    }
+
+    .favoritos__encabezado {
+        margin-bottom: 20px;
+    }
+}
+
+/* Adaptación para celulares */
+
+@media (max-width: 480px) {
+    .favoritos__contenedor {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .favoritos__mensaje {
+        padding: 16px;
+        font-size: 14px;
+    }
+}
+
+/* FORMULARIOS DE AUTENTICACIÓN */
+
+.formulario-auth {
+    width: 100%;
+    max-width: 450px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.formulario-auth h2 {
+    color: #2e7d32;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.campo-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+
+.campo-formulario label {
+    color: #333;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.campo-formulario input {
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.campo-formulario input:focus {
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
+}
+
+/* Botón de los formularios */
+
+.formulario-auth .boton {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.formulario-auth .boton:hover {
+    background-color: #1b5e20;
+}
+
+.formulario-auth .boton--completo {
+    width: 100%;
+}
+
+/* Enlaces para cambiar entre login y registro */
+
+.login__registro,
+.registro__login {
+    margin-top: 20px;
+    margin-bottom: 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.login__registro a,
+.registro__login a {
+    color: #2e7d32;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.login__registro a:hover,
+.registro__login a:hover {
+    text-decoration: underline;
+}
+
+/* Adaptación para celulares */
+
+@media (max-width: 480px) {
+    .formulario-auth {
+        margin: 20px auto;
+        padding: 22px 18px;
+    }
+
+    .campo-formulario input {
+        font-size: 16px;
+    }
+
+    .formulario-auth .boton {
+        min-height: 44px;
+    }
+}
+
+/*=========================================
+   FOOTER
+   ========================================= */
+
+
+.footer,
+footer {
+    background-color: #1b5e20;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.footer p,
+footer p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Enlaces del footer */
+
+.footer a,
+footer a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: opacity 0.2s ease;
+}
+
+.footer a:hover,
+footer a:hover {
+    text-decoration: underline;
+    opacity: 0.85;
+}
+
+/* Adaptación para tabletas */
+
+@media (max-width: 768px) {
+    .footer,
+    footer {
+        padding: 18px;
+        margin-top: 25px;
+    }
+}
+
+/* Adaptación para celulares */
+
+@media (max-width: 480px) {
+    .footer,
+    footer {
+        padding: 16px 12px;
+        margin-top: 20px;
+    }
+
+    .footer p,
+    footer p {
+        font-size: 13px;
+    }
+}
+
+/* =========================================
+   CONFIGURACIÓN GENERAL RESPONSIVE
+   ========================================= */
+
+/* Mantiene las dimensiones de los elementos */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Evita desbordamientos horizontales */
+
+html {
+    width: 100%;
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Contenido principal de la SPA */
+
+main,
+#app-content {
+    width: 100%;
+    max-width: 1100px;
+    min-width: 0;
+    min-height: 75vh;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+/* Imágenes adaptables */
+
+img {
+    max-width: 100%;
+}
+
+/* Evita que textos largos desborden */
+
+h1,
+h2,
+h3,
+p,
+a {
+    overflow-wrap: anywhere;
+}
+
+/* Adaptación para tabletas */
+
+@media (max-width: 768px) {
+    main,
+    #app-content {
+        padding: 25px 18px;
+    }
+}
+
+/* Adaptación para celulares */
+
+@media (max-width: 480px) {
+    main,
+    #app-content {
+        padding: 20px 14px;
+    }
+}
