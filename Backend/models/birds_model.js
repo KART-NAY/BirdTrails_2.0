@@ -1,7 +1,6 @@
 // const db = require("../config/data_base");
 
 // class Bird {
-//     // Genera el birdId sin expresiones regulares
 //     static generateBirdId(bird) {
 //         if (bird.id && typeof bird.id === "string") return bird.id;
 //         if (!bird.commonName) return `ave_${bird.id || "desconocida"}`;
