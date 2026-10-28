@@ -724,7 +724,7 @@
    FOOTER
    ========================================= */
 
-   
+
 .footer,
 footer {
     background-color: #1b5e20;
@@ -780,5 +780,79 @@ footer a:hover {
     .footer p,
     footer p {
         font-size: 13px;
+    }
+}
+
+/* =========================================
+   CONFIGURACIÓN GENERAL RESPONSIVE
+   ========================================= */
+
+/* Mantiene las dimensiones de los elementos */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Evita desbordamientos horizontales */
+
+html {
+    width: 100%;
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Contenido principal de la SPA */
+
+main,
+#app-content {
+    width: 100%;
+    max-width: 1100px;
+    min-width: 0;
+    min-height: 75vh;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+/* Imágenes adaptables */
+
+img {
+    max-width: 100%;
+}
+
+/* Evita que textos largos desborden */
+
+h1,
+h2,
+h3,
+p,
+a {
+    overflow-wrap: anywhere;
+}
+
+/* Adaptación para tabletas */
+
+@media (max-width: 768px) {
+    main,
+    #app-content {
+        padding: 25px 18px;
+    }
+}
+
+/* Adaptación para celulares */
+
+@media (max-width: 480px) {
+    main,
+    #app-content {
+        padding: 20px 14px;
     }
 }
