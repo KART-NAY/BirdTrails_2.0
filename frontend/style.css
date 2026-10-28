@@ -223,3 +223,132 @@
         padding: 18px;
     }
 }
+
+/* TARJETAS DE AVES */
+
+.contenedor-aves,
+.aves__contenedor {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, 250px), 1fr)
+    );
+    gap: 25px;
+    align-items: stretch;
+}
+
+.ave {
+    min-width: 0;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ave:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+}
+
+/* Imágenes de las aves */
+
+.ave img {
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+    background-color: #e8e8e8;
+}
+
+/* Información de cada ave */
+
+.ave h3 {
+    color: #2e7d32;
+    font-size: 18px;
+    margin: 15px 15px 5px;
+}
+
+.ave p {
+    margin: 4px 15px;
+    font-size: 14px;
+    color: #444;
+    overflow-wrap: anywhere;
+}
+
+/* Botón para agregar a favoritos */
+
+.boton-favorito {
+    margin: auto 15px 15px;
+    padding: 10px;
+    background-color: white;
+    color: #2e7d32;
+    border: 2px solid #2e7d32;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.boton-favorito:hover {
+    background-color: #2e7d32;
+    color: white;
+}
+
+/* Botón para eliminar de favoritos */
+
+.boton-eliminar-favorito {
+    margin: auto 15px 15px;
+    padding: 10px;
+    background-color: white;
+    color: #b3261e;
+    border: 2px solid #b3261e;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.boton-eliminar-favorito:hover {
+    background-color: #b3261e;
+    color: white;
+}
+
+/* Diseño responsive para tabletas */
+
+@media (max-width: 768px) {
+    .contenedor-aves,
+    .aves__contenedor {
+        gap: 18px;
+    }
+
+    .ave img {
+        height: 200px;
+    }
+}
+
+/* Diseño responsive para celulares */
+
+@media (max-width: 480px) {
+    .contenedor-aves,
+    .aves__contenedor {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .ave img {
+        height: 230px;
+    }
+
+    .ave h3 {
+        font-size: 17px;
+    }
+
+    .boton-favorito,
+    .boton-eliminar-favorito {
+        min-height: 44px;
+    }
+}
