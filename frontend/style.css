@@ -55,3 +55,171 @@
         font-size: 13px;
     }
 }
+
+/* ========================================
+   INICIO: BANNER PRINCIPAL
+   ======================================== */
+
+.hero {
+    min-height: 380px;
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.35),
+            rgba(0, 0, 0, 0.35)
+        ),
+        url("imagenes/pava_de_monte.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    margin-bottom: 35px;
+    padding: 20px;
+}
+
+/* Contenido del banner */
+
+.hero-contenido {
+    width: 100%;
+    max-width: 650px;
+    padding: 20px;
+}
+
+.hero h2 {
+    color: white;
+    font-size: clamp(26px, 4vw, 34px);
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: clamp(14px, 2vw, 16px);
+    margin-bottom: 25px;
+}
+
+/* Botones */
+
+.boton {
+    display: inline-block;
+    background-color: #2e7d32;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.boton:hover {
+    background-color: #1b5e20;
+}
+
+/* ========================================
+   INICIO: TARJETAS INFORMATIVAS
+   ======================================== */
+
+.contenedor-info {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, 280px), 1fr)
+    );
+    gap: 25px;
+}
+
+.info {
+    min-width: 0;
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.info:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.info h3 {
+    margin-top: 0;
+    color: #2e7d32;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info p {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.info a {
+    color: #2e7d32;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.info a:hover {
+    text-decoration: underline;
+}
+
+/* ========================================
+   DISEÑO RESPONSIVE: INICIO
+   ======================================== */
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 320px;
+        border-radius: 12px;
+    }
+
+    .hero-contenido {
+        padding: 10px;
+    }
+
+    .contenedor-info {
+        gap: 18px;
+    }
+
+    .info {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        min-height: 280px;
+        padding: 15px;
+    }
+
+    .hero h2 {
+        font-size: 25px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .boton {
+        padding: 10px 20px;
+    }
+
+    .contenedor-info {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .info {
+        padding: 18px;
+    }
+}
