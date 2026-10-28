@@ -605,3 +605,117 @@
         font-size: 14px;
     }
 }
+
+/* FORMULARIOS DE AUTENTICACIÓN */
+
+.formulario-auth {
+    width: 100%;
+    max-width: 450px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.formulario-auth h2 {
+    color: #2e7d32;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.campo-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+
+.campo-formulario label {
+    color: #333;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.campo-formulario input {
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.campo-formulario input:focus {
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
+}
+
+/* Botón de los formularios */
+
+.formulario-auth .boton {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.formulario-auth .boton:hover {
+    background-color: #1b5e20;
+}
+
+.formulario-auth .boton--completo {
+    width: 100%;
+}
+
+/* Enlaces para cambiar entre login y registro */
+
+.login__registro,
+.registro__login {
+    margin-top: 20px;
+    margin-bottom: 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.login__registro a,
+.registro__login a {
+    color: #2e7d32;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.login__registro a:hover,
+.registro__login a:hover {
+    text-decoration: underline;
+}
+
+/* Adaptación para celulares */
+
+@media (max-width: 480px) {
+    .formulario-auth {
+        margin: 20px auto;
+        padding: 22px 18px;
+    }
+
+    .campo-formulario input {
+        font-size: 16px;
+    }
+
+    .formulario-auth .boton {
+        min-height: 44px;
+    }
+}
