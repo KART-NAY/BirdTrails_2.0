@@ -352,3 +352,102 @@
         min-height: 44px;
     }
 }
+
+/* RUTAS / ZONAS */
+
+.contenedor-rutas,
+.rutas__contenedor {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, 280px), 1fr)
+    );
+    gap: 25px;
+    align-items: stretch;
+}
+
+.ruta {
+    min-width: 0;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ruta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Imágenes responsivas de las rutas */
+
+.ruta img {
+    display: block;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+/* Contenedor de códigos QR */
+
+.qr-container {
+    text-align: center;
+    margin-top: 15px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.qr-container img {
+    display: block;
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+/* Diseño responsive para tabletas */
+
+@media (max-width: 768px) {
+    .contenedor-rutas,
+    .rutas__contenedor {
+        gap: 18px;
+    }
+
+    .ruta {
+        padding: 18px;
+    }
+
+    .ruta img {
+        height: 170px;
+    }
+}
+
+/* Diseño responsive para celulares */
+
+@media (max-width: 480px) {
+    .contenedor-rutas,
+    .rutas__contenedor {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .ruta {
+        padding: 15px;
+    }
+
+    .ruta img {
+        height: 200px;
+    }
+
+    .qr-container img {
+        width: 110px;
+        height: 110px;
+    }
+}
