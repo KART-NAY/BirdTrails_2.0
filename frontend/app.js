@@ -98,3 +98,15 @@ const ROLE_STRATEGIES = {
 function getRoleStrategy(role) {
     return ROLE_STRATEGIES[role] || ROLE_STRATEGIES.normal;
 }
+// ==================================================
+// 4. CARGA DE COMPONENTES HTML
+// ==================================================
+
+const COMPONENT_HANDLERS = {
+    aves: renderBirds,
+    rutas: renderZones,
+    favoritos: renderFavorites,
+    login: conectarLogin,
+    registro: conectarRegistro,
+    admin: conectarAdmin
+};
