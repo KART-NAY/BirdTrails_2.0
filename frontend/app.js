@@ -147,3 +147,45 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("hashchange", router);
     router();
 });
+
+// ==================================================
+// 6. MENÚ Y SESIÓN
+// ==================================================
+
+function updateSessionState() {
+    const mainNav = document.getElementById("main-nav");
+    const linkSesion = document.getElementById("link-sesion");
+
+    ejecutarPorCondicion(mainNav, {
+        true: () => {
+            ejecutarPorCondicion(state.user, {
+                true: () => {
+                    mainNav.style.display = "block";
+                    const strategy = getRoleStrategy(state.user.role);
+
+                    Object.entries(strategy.navVisibility).forEach(([navId, displayValue]) => {
+                        const navItem = document.getElementById(navId);
+                        ejecutarPorCondicion(navItem, {
+                            true: () => {
+                                navItem.style.display = displayValue;
+                            }
+                        });
+                    });
+
+                    ejecutarPorCondicion(linkSesion, {
+                        true: () => {
+                            linkSesion.innerHTML = `
+                                <span class="icono-usuario">👤</span>
+                                <span class="texto-sesion">Hola, ${state.user.name} (Cerrar sesión)</span>
+                            `;
+                            linkSesion.href = "#/logout";
+                        }
+                    });
+                },
+                false: () => {
+                    mainNav.style.display = "none";
+                }
+            });
+        }
+    });
+}
