@@ -55,3 +55,42 @@ const PUBLIC_ROUTES = {
     "#/login": "login",
     "#/registro": "registro"
 };
+
+const ROLE_STRATEGIES = {
+    normal: {
+        defaultRoute: "#/inicio",
+        birdCardAction: "favorite",
+        navVisibility: {
+            "nav-admin": "none",
+            "nav-inicio": "list-item",
+            "nav-aves": "list-item",
+            "nav-rutas": "list-item",
+            "nav-recomendaciones": "list-item",
+            "nav-favoritos": "list-item"
+        },
+        routes: {
+            "#/inicio": "inicio",
+            "#/aves": "aves",
+            "#/rutas": "rutas",
+            "#/recomendaciones": "recomendaciones",
+            "#/favoritos": "favoritos"
+        }
+    },
+    admin: {
+        defaultRoute: "#/admin",
+        birdCardAction: "delete",
+        navVisibility: {
+            "nav-admin": "list-item",
+            "nav-inicio": "none",
+            "nav-aves": "list-item",
+            "nav-rutas": "list-item",
+            "nav-recomendaciones": "none",
+            "nav-favoritos": "none"
+        },
+        routes: {
+            "#/admin": "admin",
+            "#/aves": "aves",
+            "#/rutas": "rutas"
+        }
+    }
+};
