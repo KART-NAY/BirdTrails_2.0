@@ -189,3 +189,57 @@ function updateSessionState() {
         }
     });
 }
+
+// ==================================================
+// 7. ENRUTADOR SPA
+// ==================================================
+
+async function router() {
+    const defaultHashes = {
+        true: () => getRoleStrategy(state.user?.role).defaultRoute,
+        false: () => "#/login"
+    };
+
+    const hash = window.location.hash || defaultHashes[Boolean(state.user)]();
+
+    const specialRoutes = {
+        "#/logout": async () => {
+            localStorage.removeItem("user");
+            state.user = null;
+            updateSessionState();
+            window.location.hash = "#/login";
+        }
+    };
+
+    const routeDispatcher = specialRoutes[hash] || (async () => {
+        await ejecutarPorCondicion(state.user, {
+            false: async () => {
+                const publicComponent = PUBLIC_ROUTES[hash];
+                await ejecutarPorCondicion(publicComponent, {
+                    true: async () => {
+                        updateSessionState();
+                        await cargarComponente(publicComponent);
+                    },
+                    false: async () => {
+                        window.location.hash = "#/login";
+                    }
+                });
+            },
+            true: async () => {
+                const strategy = getRoleStrategy(state.user.role);
+                const privateComponent = strategy.routes[hash];
+                await ejecutarPorCondicion(privateComponent, {
+                    true: async () => {
+                        updateSessionState();
+                        await cargarComponente(privateComponent);
+                    },
+                    false: async () => {
+                        window.location.hash = strategy.defaultRoute;
+                    }
+                });
+            }
+        });
+    });
+
+    await routeDispatcher();
+}
