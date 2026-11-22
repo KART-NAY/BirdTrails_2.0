@@ -427,3 +427,27 @@ function crearHtmlCartillaZona(zone, extraActionsHtml = "") {
     `;
 }
 
+async function renderZones() {
+    const lista = document.getElementById("lista-rutas");
+
+    await ejecutarPorCondicion(lista, {
+        true: async () => {
+            try {
+                const response = await fetch(`${API_URL}/zones`);
+                const zones = await response.json();
+
+                await ejecutarPorCondicion(response.ok, {
+                    false: () => Promise.reject(new Error(zones.message || "Error al obtener rutas.")),
+                    true: () => {
+                        lista.innerHTML = zones
+                            .map(zone => crearHtmlCartillaZona(zone))
+                            .join("");
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+                lista.innerHTML = "<p>Error al cargar las rutas de avistamiento.</p>";
+            }
+        }
+    });
+}
