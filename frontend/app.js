@@ -873,3 +873,55 @@ function conectarLogin() {
         }
     });
 }
+
+// ==================================================
+// 13. REGISTRAR USUARIO
+// ==================================================
+
+function conectarRegistro() {
+    const formulario = document.getElementById("form-registro");
+
+    ejecutarPorCondicion(formulario, {
+        false: () => {
+            console.error("No se encontró el formulario form-registro en registro.html");
+        },
+        true: () => {
+            formulario.addEventListener("submit", async event => {
+                event.preventDefault();
+
+                const name = document.getElementById("name").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const password = document.getElementById("password").value;
+
+                try {
+                    const response = await fetch(`${API_URL}/users/register`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            name,
+                            email,
+                            password
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    ejecutarPorCondicion(response.ok, {
+                        false: () => {
+                            alert(data.message || "No se pudo crear la cuenta.");
+                        },
+                        true: () => {
+                            alert("Cuenta creada con éxito. Inicia sesión para continuar.");
+                            window.location.hash = "#/login";
+                        }
+                    });
+                } catch (error) {
+                    console.error(error);
+                    alert("No se pudo conectar con el servidor.");
+                }
+            });
+        }
+    });
+}
