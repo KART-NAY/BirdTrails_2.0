@@ -339,3 +339,48 @@ const BIRD_CARD_ACTION_BINDERS = {
         });
     }
 };
+
+async function renderBirds() {
+    const lista = document.getElementById("lista-aves");
+
+    await ejecutarPorCondicion(lista, {
+        true: async () => {
+            try {
+                const response = await fetch(`${API_URL}/birds`);
+                const processedBirds = await response.json();
+
+                await ejecutarPorCondicion(response.ok, {
+                    false: () => Promise.reject(new Error(processedBirds.message || "Error al obtener aves.")),
+                    true: () => {
+                        const strategy = getRoleStrategy(state.user?.role);
+                        const renderActionButton = BIRD_CARD_BUTTON_TEMPLATES[strategy.birdCardAction] || (() => "");
+
+                        lista.innerHTML = processedBirds.map(bird => `
+                            <div class="ave">
+                                <img src="${bird.image}" alt="${bird.commonName}">
+
+                                <h3>${bird.commonName}</h3>
+
+                                <p><em>${bird.classification.scientificName}</em></p>
+
+                                <p><strong>Familia:</strong> ${bird.classification.family}</p>
+
+                                <p><strong>Hábitat:</strong> ${bird.ecology.habitat}</p>
+
+                                <p><strong>Alimentación:</strong> ${bird.ecology.feeding}</p>
+
+                                ${renderActionButton(bird)}
+                            </div>
+                        `).join("");
+
+                        const bindAction = BIRD_CARD_ACTION_BINDERS[strategy.birdCardAction] || (() => {});
+                        bindAction(lista);
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+                lista.innerHTML = "<p>Error al cargar las aves desde la base de datos.</p>";
+            }
+        }
+    });
+}
