@@ -94,3 +94,7 @@ const ROLE_STRATEGIES = {
         }
     }
 };
+
+function getRoleStrategy(role) {
+    return ROLE_STRATEGIES[role] || ROLE_STRATEGIES.normal;
+}
