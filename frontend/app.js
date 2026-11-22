@@ -575,3 +575,116 @@ async function cargarSelectorAvesAdmin() {
         }
     });
 }
+// ==================================================
+// 11. PANEL DE ADMINISTRACIÓN (ROL ADMIN)
+// ==================================================
+
+async function cargarSelectorAvesAdmin() {
+    const contenedor = document.getElementById("selector-aves-zona");
+
+    await ejecutarPorCondicion(contenedor, {
+        true: async () => {
+            try {
+                const response = await fetch(`${API_URL}/birds`);
+                const birds = await response.json();
+
+                ejecutarPorCondicion(response.ok, {
+                    true: () => {
+                        contenedor.innerHTML = birds.map(bird => `
+                            <label class="item-ave-check">
+                                <input type="checkbox" name="zoneBirdIds" value="${bird.id}">
+                                <span>${bird.commonName}</span>
+                            </label>
+                        `).join("");
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    });
+}
+
+async function renderAdminZones() {
+    const lista = document.getElementById("lista-admin-zonas");
+
+    await ejecutarPorCondicion(lista, {
+        true: async () => {
+            try {
+                const response = await fetch(`${API_URL}/zones`);
+                const zones = await response.json();
+
+                await ejecutarPorCondicion(response.ok, {
+                    true: () => {
+                        lista.innerHTML = zones.map(zone => {
+                            const acciones = `
+                                <div class="acciones-ruta">
+                                    <button type="button" class="boton-favorito boton-editar-zona" data-id="${zone.id}">
+                                        Editar cartilla
+                                    </button>
+                                    <button type="button" class="boton-eliminar-favorito boton-eliminar-zona" data-id="${zone.id}">
+                                        Eliminar cartilla
+                                    </button>
+                                </div>
+                            `;
+                            return crearHtmlCartillaZona(zone, acciones);
+                        }).join("");
+
+                        const zonesById = Object.fromEntries(zones.map(z => [String(z.id), z]));
+
+                        lista.querySelectorAll(".boton-editar-zona").forEach(button => {
+                            button.addEventListener("click", () => {
+                                const zona = zonesById[button.dataset.id];
+                                ejecutarPorCondicion(zona, {
+                                    true: () => {
+                                        document.getElementById("zone-id").value = zona.id;
+                                        document.getElementById("zone-name").value = zona.name;
+                                        document.getElementById("zone-location").value = zona.location;
+                                        document.getElementById("zone-description").value = zona.description;
+                                        document.getElementById("zone-image").value = zona.image || "";
+                                        document.getElementById("titulo-form-zona").textContent = `Editando cartilla: ${zona.name}`;
+
+                                        const asociados = new Set((zona.birdIds || []).map(Number));
+                                        document.querySelectorAll('input[name="zoneBirdIds"]').forEach(cb => {
+                                            cb.checked = asociados.has(Number(cb.value));
+                                        });
+                                    }
+                                });
+                            });
+                        });
+
+                        lista.querySelectorAll(".boton-eliminar-zona").forEach(button => {
+                            button.addEventListener("click", async () => {
+                                const zoneId = Number(button.dataset.id);
+                                try {
+                                    const delResponse = await fetch(`${API_URL}/zones/${encodeURIComponent(zoneId)}`, {
+                                        method: "DELETE",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify({ userId: state.user.id })
+                                    });
+
+                                    const data = await delResponse.json();
+                                    await ejecutarPorCondicion(delResponse.ok, {
+                                        false: () => alert(data.message || "No se pudo eliminar la cartilla."),
+                                        true: async () => {
+                                            alert(data.message || "Cartilla eliminada.");
+                                            await renderAdminZones();
+                                        }
+                                    });
+                                } catch (error) {
+                                    console.error(error);
+                                    alert("Error al eliminar la cartilla.");
+                                }
+                            });
+                        });
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+                lista.innerHTML = "<p>Error al cargar las cartillas de zonas.</p>";
+            }
+        }
+    });
+}
