@@ -50,3 +50,8 @@ function obtenerUsuarioGuardado() {
 const state = {
     user: obtenerUsuarioGuardado()
 };
+
+const PUBLIC_ROUTES = {
+    "#/login": "login",
+    "#/registro": "registro"
+};
