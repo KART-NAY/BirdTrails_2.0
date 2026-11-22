@@ -688,3 +688,13 @@ async function renderAdminZones() {
         }
     });
 }
+function limpiarFormularioZona() {
+    const formZona = document.getElementById("form-admin-zona");
+    ejecutarPorCondicion(formZona, {
+        true: () => {
+            formZona.reset();
+            document.getElementById("zone-id").value = "";
+            document.getElementById("titulo-form-zona").textContent = "Agregar nueva cartilla de zona";
+        }
+    });
+}
