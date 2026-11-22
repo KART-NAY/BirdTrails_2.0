@@ -1,287 +1,33 @@
 const API_URL = "http://localhost:5000/api";
 
 // ==================================================
-// 1. DATOS DE LAS AVES
+// 1. UTILIDAD POLIMÓRFICA / MAPEO SIN CONDICIONALES IF
 // ==================================================
 
-const BIRDS_DATA = [
-    {
-        id: "pava_monte",
-        commonName: "Pava de Monte",
-        scientificName: "Penelope montagnii",
-        author: "Bonaparte, 1856",
-        family: "Cracidae",
-        altitudinalRange: "1500 - 3500 m",
-        size: "60 cm",
-        sexualDimorphism: "No",
-        habitat: "Bosque de niebla / Andino",
-        presenceType: "Residente",
-        localName: "Pava",
-        feeding: "Frutos y brotes",
-        additionalData: "Ave arborícola vulnerable a la pérdida de hábitat.",
-        image: "imagenes/pava_de_monte.png"
-    },
-    {
-        id: "pava_guacharacha",
-        commonName: "Guacharacha",
-        scientificName: "Ortalis columbiana",
-        author: "Hellmayr, 1906",
-        family: "Cracidae",
-        altitudinalRange: "1000 - 2500 m",
-        size: "50 cm",
-        sexualDimorphism: "No",
-        habitat: "Matorrales y bordes de bosque",
-        presenceType: "Endémica",
-        localName: "Guacharacha",
-        feeding: "Semillas y frutas",
-        additionalData: "Muy ruidosa y territorial.",
-        image: "imagenes/pava_guacharacha.jpg"
-    },
-    {
-        id: "caminera_cabeciazul",
-        commonName: "Caminera Cabeciazul",
-        scientificName: "Leptotila conoveri",
-        author: "Bond & Meyer de Schauensee, 1943",
-        family: "Columbidae",
-        altitudinalRange: "1200 - 2200 m",
-        size: "25 cm",
-        sexualDimorphism: "No",
-        habitat: "Suelo de bosque húmedo",
-        presenceType: "Endémica",
-        localName: "Caminera azul",
-        feeding: "Granos y pequeños invertebrados",
-        additionalData: "Especie terrestre difícil de avistar.",
-        image: "imagenes/caminera_cabeciazul.jpg"
-    },
-    {
-        id: "caminera_rabiblanca",
-        commonName: "Caminera Rabiblanca",
-        scientificName: "Leptotila verreauxi",
-        author: "Bonaparte, 1855",
-        family: "Columbidae",
-        altitudinalRange: "0 - 2600 m",
-        size: "28 cm",
-        sexualDimorphism: "No",
-        habitat: "Bosques secos y áreas abiertas",
-        presenceType: "Residente",
-        localName: "Paloma caminera",
-        feeding: "Semillas en el suelo",
-        additionalData: "Camina frecuentemente por senderos.",
-        image: "imagenes/caminera_rabiblanca.jpg"
-    },
-    {
-        id: "paloma_colorada",
-        commonName: "Paloma Colorada",
-        scientificName: "Patagioenas subvinacea",
-        author: "Lawrence, 1868",
-        family: "Columbidae",
-        altitudinalRange: "1000 - 2800 m",
-        size: "30 cm",
-        sexualDimorphism: "No",
-        habitat: "Dosel del bosque",
-        presenceType: "Residente",
-        localName: "Paloma de monte",
-        feeding: "Frutas silvestres",
-        additionalData: "Habita en las copas de los árboles.",
-        image: "imagenes/paloma_colorada.jpg"
-    },
-    {
-        id: "paloma_comun",
-        commonName: "Paloma Común",
-        scientificName: "Columba livia",
-        author: "Gmelin, 1789",
-        family: "Columbidae",
-        altitudinalRange: "0 - 3000 m",
-        size: "32 cm",
-        sexualDimorphism: "No",
-        habitat: "Zonas urbanas",
-        presenceType: "Introducida",
-        localName: "Paloma de plaza",
-        feeding: "Semillas y desperdicios",
-        additionalData: "Adaptada completamente a la vida urbana.",
-        image: "imagenes/Paloma_comun.jpg"
-    },
-    {
-        id: "paloma_collar",
-        commonName: "Paloma de Collar",
-        scientificName: "Patagioenas fasciata",
-        author: "Say, 1823",
-        family: "Columbidae",
-        altitudinalRange: "1500 - 3300 m",
-        size: "35 cm",
-        sexualDimorphism: "No",
-        habitat: "Bosques de robles y altoandinos",
-        presenceType: "Residente",
-        localName: "Torcaza alta",
-        feeding: "Bellotas y frutos",
-        additionalData: "Se desplaza en bandadas grandes.",
-        image: "imagenes/paloma_de_collar.jpg"
-    },
-    {
-        id: "perdiz_comun",
-        commonName: "Perdiz Común",
-        scientificName: "Nothoprocta curvirostris",
-        author: "Sclater & Salvin, 1873",
-        family: "Tinamidae",
-        altitudinalRange: "2500 - 3800 m",
-        size: "28 cm",
-        sexualDimorphism: "No",
-        habitat: "Páramo y subpáramo",
-        presenceType: "Residente",
-        localName: "Perdiz de páramo",
-        feeding: "Semillas y raíces",
-        additionalData: "Vuela únicamente en tramos muy cortos.",
-        image: "imagenes/Perdiz_comun.jpg"
-    },
-    {
-        id: "torcaza_naguiblanca",
-        commonName: "Torcaza Naguiblanca",
-        scientificName: "Zenaida auriculata",
-        author: "Des Murs, 1847",
-        family: "Columbidae",
-        altitudinalRange: "0 - 3000 m",
-        size: "24 cm",
-        sexualDimorphism: "No",
-        habitat: "Campos abiertos y cultivos",
-        presenceType: "Residente",
-        localName: "Torcaza",
-        feeding: "Semillas de cereales",
-        additionalData: "Muy abundante en zonas agrícolas.",
-        image: "imagenes/Torcaza_naguiblanca.jpg"
-    },
-    {
-        id: "tortolita_diminuta",
-        commonName: "Tortolita Diminuta",
-        scientificName: "Columbina minuta",
-        author: "Linnaeus, 1766",
-        family: "Columbidae",
-        altitudinalRange: "0 - 1800 m",
-        size: "15 cm",
-        sexualDimorphism: "Sí",
-        habitat: "Matorrales secos",
-        presenceType: "Residente",
-        localName: "Tortolita",
-        feeding: "Semillas pequeñas",
-        additionalData: "Una de las palomas más pequeñas de Colombia.",
-        image: "imagenes/Tortolita_diminuta.jpg"
-    }
-];
-
-// ==================================================
-// 2. DATOS DE LAS RUTAS
-// ==================================================
-
-const ZONES_DATA = [
-    {
-        id: 1,
-        name: "Sendero Los Arrayanales",
-        location: "Popayán - Vereda La Rejoya",
-        description: "Ruta rodeada de vegetación nativa ideal para el avistamiento de aves de bosque altoandino.",
-        image: "imagenes/zona.arrayanales.jpg"
-    },
-    {
-        id: 2,
-        name: "Reserva El Oasis",
-        location: "Popayán - Sector Norte",
-        description: "Espacio protegido con humedales y senderos rodeados de árboles de gran porte.",
-        image: "imagenes/zona.oasis.jpg"
-    },
-    {
-        id: 3,
-        name: "Ruta Rayo de Sol",
-        location: "Popayán - Vereda Clara",
-        description: "Recorrido con buena visibilidad matutina para observación de torcazas y perdices.",
-        image: "imagenes/zona.rayo.sol.jpg"
-    },
-    {
-        id: 4,
-        name: "Sendero Ecologico Principal",
-        location: "Popayán - Parque Ecológico",
-        description: "Sendero accesible para principiantes en la observación de aves urbanas y periurbanas.",
-        image: "imagenes/zona.sendero.jpg"
-    },
-    {
-        id: 5,
-        name: "Mirador Barranquero",
-        location: "Popayán - Vereda San Bernardino",
-        description: "Punto elevado preferido para observar especies de dosel y aves ruidosas.",
-        image: "imagenes/zona_barranquero.jpg"
-    }
-];
-
-// ==================================================
-// 3. PATRÓN BUILDER
-// ==================================================
-
-class BirdTechnicalSheetBuilder {
-    constructor(data) {
-        this.bird = { ...data };
-        this.bird.id = this.resolveBirdId();
-    }
-
-    resolveBirdId() {
-        if (this.bird.id) return this.bird.id;
-
-        if (this.bird.commonName) {
-            return this.bird.commonName
-                .toLowerCase()
-                .replaceAll(" ", "_");
-        }
-
-        return "ave_desconocida";
-    }
-
-    setClassification() {
-        this.bird.classification = {
-            family: this.bird.family,
-            author: this.bird.author,
-            scientificName: this.bird.scientificName
-        };
-
-        return this;
-    }
-
-    setBiometrics() {
-        this.bird.biometrics = {
-            size: this.bird.size,
-            sexualDimorphism: this.bird.sexualDimorphism
-        };
-
-        return this;
-    }
-
-    setEcology() {
-        this.bird.ecology = {
-            altitudinalRange: this.bird.altitudinalRange,
-            habitat: this.bird.habitat,
-            presenceType: this.bird.presenceType,
-            feeding: this.bird.feeding
-        };
-
-        return this;
-    }
-
-    build() {
-        return {
-            id: this.bird.id,
-            commonName: this.bird.commonName,
-            localName: this.bird.localName,
-            image: this.bird.image,
-            additionalData: this.bird.additionalData,
-            classification: this.bird.classification,
-            biometrics: this.bird.biometrics,
-            ecology: this.bird.ecology
-        };
-    }
+function ejecutarPorCondicion(condicion, acciones) {
+    const clave = Boolean(condicion);
+    const accion = acciones[clave] || (() => {});
+    return accion();
 }
 
-class BirdBuilderService {
-    static buildDetailedSheet(birdRaw) {
-        return new BirdTechnicalSheetBuilder(birdRaw)
-            .setClassification()
-            .setBiometrics()
-            .setEcology()
-            .build();
+// ==================================================
+// 2. PATRÓN ADAPTER
+// ==================================================
+
+class AdapterGoogleMaps {
+    static generateNavigationLink(zoneName, location) {
+        const query = encodeURIComponent(`${zoneName} ${location}`);
+
+        return `https://www.google.com/maps/search/?api=1&query=${query}`;
+    }
+
+    static generateQRCodeData(zoneName, location) {
+        const urlMaps = this.generateNavigationLink(zoneName, location);
+
+        return {
+            url: urlMaps,
+            qrApiUrl: `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(urlMaps)}`
+        };
     }
 }
 
