@@ -698,3 +698,120 @@ function limpiarFormularioZona() {
         }
     });
 }
+
+async function conectarAdmin() {
+    await cargarSelectorAvesAdmin();
+    await renderAdminZones();
+
+    const formAve = document.getElementById("form-admin-ave");
+    const formZona = document.getElementById("form-admin-zona");
+    const btnCancelarEdicion = document.getElementById("btn-cancelar-zona");
+
+    ejecutarPorCondicion(btnCancelarEdicion, {
+        true: () => {
+            btnCancelarEdicion.addEventListener("click", limpiarFormularioZona);
+        }
+    });
+
+    ejecutarPorCondicion(formAve, {
+        true: () => {
+            formAve.addEventListener("submit", async event => {
+                event.preventDefault();
+
+                const payload = {
+                    userId: state.user.id,
+                    commonName: document.getElementById("bird-common-name").value.trim(),
+                    scientificName: document.getElementById("bird-scientific-name").value.trim(),
+                    author: document.getElementById("bird-author").value.trim(),
+                    family: document.getElementById("bird-family").value.trim(),
+                    altitudinalRange: document.getElementById("bird-altitudinal-range").value.trim(),
+                    size: document.getElementById("bird-size").value.trim(),
+                    sexualDimorphism: document.getElementById("bird-sexual-dimorphism").value.trim(),
+                    habitat: document.getElementById("bird-habitat").value.trim(),
+                    presenceType: document.getElementById("bird-presence-type").value.trim(),
+                    localName: document.getElementById("bird-local-name").value.trim(),
+                    feeding: document.getElementById("bird-feeding").value.trim(),
+                    additionalData: document.getElementById("bird-additional-data").value.trim(),
+                    image: document.getElementById("bird-image").value.trim()
+                };
+
+                try {
+                    const response = await fetch(`${API_URL}/birds`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const data = await response.json();
+
+                    await ejecutarPorCondicion(response.ok, {
+                        false: () => alert(data.message || "No se pudo registrar el ave."),
+                        true: async () => {
+                            alert(data.message || "Ave registrada correctamente.");
+                            formAve.reset();
+                            await cargarSelectorAvesAdmin();
+                        }
+                    });
+                } catch (error) {
+                    console.error(error);
+                    alert("Error al conectar con el servidor.");
+                }
+            });
+        }
+    });
+
+    ejecutarPorCondicion(formZona, {
+        true: () => {
+            formZona.addEventListener("submit", async event => {
+                event.preventDefault();
+
+                const zoneId = document.getElementById("zone-id").value.trim();
+                const birdIds = Array.from(
+                    document.querySelectorAll('input[name="zoneBirdIds"]:checked')
+                ).map(cb => Number(cb.value));
+
+                const payload = {
+                    userId: state.user.id,
+                    name: document.getElementById("zone-name").value.trim(),
+                    location: document.getElementById("zone-location").value.trim(),
+                    description: document.getElementById("zone-description").value.trim(),
+                    image: document.getElementById("zone-image").value.trim(),
+                    birdIds
+                };
+
+                const requestByMode = {
+                    false: { url: `${API_URL}/zones`, method: "POST" },
+                    true: { url: `${API_URL}/zones/${encodeURIComponent(zoneId)}`, method: "PUT" }
+                };
+
+                const { url, method } = requestByMode[Boolean(zoneId)];
+
+                try {
+                    const response = await fetch(url, {
+                        method,
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const data = await response.json();
+
+                    await ejecutarPorCondicion(response.ok, {
+                        false: () => alert(data.message || "No se pudo guardar la cartilla."),
+                        true: async () => {
+                            alert(data.message || "Cartilla guardada correctamente.");
+                            limpiarFormularioZona();
+                            await renderAdminZones();
+                        }
+                    });
+                } catch (error) {
+                    console.error(error);
+                    alert("Error al conectar con el servidor.");
+                }
+            });
+        }
+    });
+}
