@@ -110,3 +110,31 @@ const COMPONENT_HANDLERS = {
     registro: conectarRegistro,
     admin: conectarAdmin
 };
+
+async function cargarComponente(nombre) {
+    const contenedor = document.getElementById("app-content");
+
+    try {
+        const respuesta = await fetch(`components/${nombre}.html`);
+
+        const contenidoHtml = await ejecutarPorCondicion(respuesta.ok, {
+            true: () => respuesta.text(),
+            false: () => Promise.reject(new Error(`No se pudo cargar components/${nombre}.html`))
+        });
+
+        contenedor.innerHTML = contenidoHtml;
+
+        const handler = COMPONENT_HANDLERS[nombre] || (() => {});
+        await handler();
+    } catch (error) {
+        console.error("Error al cargar el componente:", error);
+
+        contenedor.innerHTML = `
+            <section>
+                <h2>Error al cargar la página</h2>
+                <p>No fue posible cargar el componente solicitado.</p>
+                <p>Verifica que exista el archivo HTML dentro de la carpeta components.</p>
+            </section>
+        `;
+    }
+}
