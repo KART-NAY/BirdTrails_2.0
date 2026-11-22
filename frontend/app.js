@@ -451,3 +451,98 @@ async function renderZones() {
         }
     });
 }
+// ==================================================
+// 10. MOSTRAR FAVORITOS (DESDE MYSQL)
+// ==================================================
+
+async function renderFavorites() {
+    const lista = document.getElementById("lista-favoritos");
+
+    await ejecutarPorCondicion(lista, {
+        true: async () => {
+            await ejecutarPorCondicion(state.user, {
+                false: () => {
+                    lista.innerHTML = "<p>Debes iniciar sesión para ver tus favoritos.</p>";
+                },
+                true: async () => {
+                    lista.innerHTML = "<p>Cargando favoritos...</p>";
+
+                    try {
+                        const response = await fetch(
+                            `${API_URL}/favorites?userId=${encodeURIComponent(state.user.id)}`
+                        );
+                        const favorites = await response.json();
+
+                        await ejecutarPorCondicion(response.ok, {
+                            false: () => Promise.reject(new Error(favorites.message || "Error al obtener favoritos.")),
+                            true: () => {
+                                const hasFavorites = Array.isArray(favorites) && favorites.length > 0;
+
+                                ejecutarPorCondicion(hasFavorites, {
+                                    false: () => {
+                                        lista.innerHTML = "<p>Aún no has agregado aves a tus favoritos.</p>";
+                                    },
+                                    true: () => {
+                                        lista.innerHTML = favorites.map(bird => `
+                                            <div class="ave">
+                                                <img src="${bird.image}" alt="${bird.commonName}">
+
+                                                <h3>${bird.commonName}</h3>
+
+                                                <p><em>${bird.scientificName}</em></p>
+
+                                                <p><strong>Nombre local:</strong> ${bird.localName}</p>
+
+                                                <button
+                                                    type="button"
+                                                    class="boton-eliminar-favorito"
+                                                    data-id="${bird.birdId}">
+                                                    Eliminar de Favoritos
+                                                </button>
+                                            </div>
+                                        `).join("");
+
+                                        lista.querySelectorAll(".boton-eliminar-favorito").forEach(button => {
+                                            button.addEventListener("click", async () => {
+                                                const birdId = Number(button.dataset.id);
+
+                                                try {
+                                                    const deleteResponse = await fetch(`${API_URL}/favorites`, {
+                                                        method: "DELETE",
+                                                        headers: {
+                                                            "Content-Type": "application/json"
+                                                        },
+                                                        body: JSON.stringify({
+                                                            userId: state.user.id,
+                                                            birdId
+                                                        })
+                                                    });
+
+                                                    const data = await deleteResponse.json();
+
+                                                    await ejecutarPorCondicion(deleteResponse.ok, {
+                                                        false: () => alert(data.message || "No se pudo eliminar el favorito."),
+                                                        true: async () => {
+                                                            alert(data.message || "Favorito eliminado.");
+                                                            await renderFavorites();
+                                                        }
+                                                    });
+                                                } catch (error) {
+                                                    console.error(error);
+                                                    alert("Error al eliminar favorito.");
+                                                }
+                                            });
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    } catch (error) {
+                        console.error(error);
+                        lista.innerHTML = "<p>Error al obtener tus favoritos.</p>";
+                    }
+                }
+            });
+        }
+    });
+}
