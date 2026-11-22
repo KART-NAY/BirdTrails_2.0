@@ -138,3 +138,12 @@ async function cargarComponente(nombre) {
         `;
     }
 }
+
+// ==================================================
+// 5. INICIO DE LA APLICACIÓN
+// ==================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("hashchange", router);
+    router();
+});
