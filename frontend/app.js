@@ -546,3 +546,32 @@ async function renderFavorites() {
         }
     });
 }
+// ==================================================
+// 11. PANEL DE ADMINISTRACIÓN (ROL ADMIN)
+// ==================================================
+
+async function cargarSelectorAvesAdmin() {
+    const contenedor = document.getElementById("selector-aves-zona");
+
+    await ejecutarPorCondicion(contenedor, {
+        true: async () => {
+            try {
+                const response = await fetch(`${API_URL}/birds`);
+                const birds = await response.json();
+
+                ejecutarPorCondicion(response.ok, {
+                    true: () => {
+                        contenedor.innerHTML = birds.map(bird => `
+                            <label class="item-ave-check">
+                                <input type="checkbox" name="zoneBirdIds" value="${bird.id}">
+                                <span>${bird.commonName}</span>
+                            </label>
+                        `).join("");
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    });
+}
