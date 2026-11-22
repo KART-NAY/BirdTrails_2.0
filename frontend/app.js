@@ -34,3 +34,19 @@ class AdapterGoogleMaps {
         };
     }
 }
+
+// ==================================================
+// 3. ESTADO DE LA APLICACIÓN Y ROLES
+// ==================================================
+
+function obtenerUsuarioGuardado() {
+    try {
+        return JSON.parse(localStorage.getItem("user")) || null;
+    } catch {
+        return null;
+    }
+}
+
+const state = {
+    user: obtenerUsuarioGuardado()
+};
