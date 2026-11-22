@@ -243,3 +243,26 @@ async function router() {
 
     await routeDispatcher();
 }
+
+// ==================================================
+// 8. MOSTRAR LAS AVES (DESDE MYSQL)
+// ==================================================
+
+const BIRD_CARD_BUTTON_TEMPLATES = {
+    favorite: bird => `
+        <button
+            type="button"
+            class="boton-favorito"
+            data-id="${bird.id}">
+            ♡ Agregar a Favoritos
+        </button>
+    `,
+    delete: bird => `
+        <button
+            type="button"
+            class="boton-eliminar-favorito boton-eliminar-ave"
+            data-id="${bird.id}">
+            Eliminar Ave
+        </button>
+    `
+};
