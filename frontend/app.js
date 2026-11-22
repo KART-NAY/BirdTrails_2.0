@@ -384,3 +384,46 @@ async function renderBirds() {
         }
     });
 }
+
+// ==================================================
+// 9. MOSTRAR LAS RUTAS (DESDE MYSQL)
+// ==================================================
+
+function crearHtmlCartillaZona(zone, extraActionsHtml = "") {
+    const mapsData = AdapterGoogleMaps.generateQRCodeData(
+        zone.name,
+        zone.location
+    );
+
+    return `
+        <article class="ruta">
+            <img src="${zone.image}" alt="${zone.name}">
+
+            <h3>${zone.name}</h3>
+
+            <p>📍 ${zone.location}</p>
+
+            <p>${zone.description}</p>
+
+            <a
+                href="${mapsData.url}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="boton"
+                style="display:inline-block; margin-top:10px;">
+                📍 Ver en Google Maps
+            </a>
+
+            <div class="qr-container">
+                <p><strong>Escanea para llegar:</strong></p>
+
+                <img
+                    src="${mapsData.qrApiUrl}"
+                    alt="Código QR ${zone.name}">
+            </div>
+
+            ${extraActionsHtml}
+        </article>
+    `;
+}
+
