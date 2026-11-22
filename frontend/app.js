@@ -266,3 +266,76 @@ const BIRD_CARD_BUTTON_TEMPLATES = {
         </button>
     `
 };
+
+const BIRD_CARD_ACTION_BINDERS = {
+    favorite: lista => {
+        lista.querySelectorAll(".boton-favorito").forEach(button => {
+            button.addEventListener("click", async () => {
+                await ejecutarPorCondicion(state.user, {
+                    false: () => {
+                        alert("Debes iniciar sesión.");
+                        window.location.hash = "#/login";
+                    },
+                    true: async () => {
+                        const birdId = Number(button.dataset.id);
+
+                        try {
+                            const favResponse = await fetch(`${API_URL}/favorites`, {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    userId: state.user.id,
+                                    birdId
+                                })
+                            });
+
+                            const data = await favResponse.json();
+
+                            ejecutarPorCondicion(favResponse.ok, {
+                                false: () => alert(data.message || "No se pudo agregar el favorito."),
+                                true: () => alert(data.message || "Ave agregada a favoritos.")
+                            });
+                        } catch (error) {
+                            console.error(error);
+                            alert("Error al conectar con el servidor.");
+                        }
+                    }
+                });
+            });
+        });
+    },
+    delete: lista => {
+        lista.querySelectorAll(".boton-eliminar-ave").forEach(button => {
+            button.addEventListener("click", async () => {
+                const birdId = Number(button.dataset.id);
+
+                try {
+                    const delResponse = await fetch(`${API_URL}/birds/${encodeURIComponent(birdId)}`, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            userId: state.user.id
+                        })
+                    });
+
+                    const data = await delResponse.json();
+
+                    await ejecutarPorCondicion(delResponse.ok, {
+                        false: () => alert(data.message || "No se pudo eliminar el ave."),
+                        true: async () => {
+                            alert(data.message || "Ave eliminada correctamente.");
+                            await renderBirds();
+                        }
+                    });
+                } catch (error) {
+                    console.error(error);
+                    alert("Error al conectar con el servidor.");
+                }
+            });
+        });
+    }
+};
