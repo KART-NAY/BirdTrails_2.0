@@ -815,3 +815,61 @@ async function conectarAdmin() {
         }
     });
 }
+
+// ==================================================
+// 12. INICIAR SESIÓN
+// ==================================================
+
+function conectarLogin() {
+    const formulario = document.getElementById("form-login");
+
+    ejecutarPorCondicion(formulario, {
+        false: () => {
+            console.error("No se encontró el formulario form-login en login.html");
+        },
+        true: () => {
+            formulario.addEventListener("submit", async event => {
+                event.preventDefault();
+
+                const email = document.getElementById("email").value.trim();
+                const password = document.getElementById("password").value;
+
+                try {
+                    const response = await fetch(`${API_URL}/users/login`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+
+                    ejecutarPorCondicion(response.ok, {
+                        false: () => {
+                            alert(data.message || "No se pudo iniciar sesión.");
+                        },
+                        true: () => {
+                            ejecutarPorCondicion(data.user, {
+                                false: () => {
+                                    alert("El servidor no devolvió los datos del usuario.");
+                                },
+                                true: () => {
+                                    state.user = data.user;
+                                    localStorage.setItem("user", JSON.stringify(data.user));
+
+                                    updateSessionState();
+                                    const strategy = getRoleStrategy(data.user.role);
+                                    window.location.hash = strategy.defaultRoute;
+                                }
+                            });
+                        }
+                    });
+                } catch (error) {
+                    console.error(error);
+                    alert("No se pudo conectar con el servidor.");
+                }
+            });
+        }
+    });
+}
