@@ -15,18 +15,19 @@ const loginUser = async (email, password) => {
     return {
         id: user.id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: user.role
     };
 };
 
-const registerUser = async (name, email, password) => {
+const registerUser = async (name, email, password, role = "normal") => {
     const existingUser = await User.findByEmail(email);
     if (existingUser) {
         throw new Error("El correo ya está registrado");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    return await User.create(name, email, hashedPassword);
+    return await User.create(name, email, hashedPassword, role);
 };
 
 module.exports = {
