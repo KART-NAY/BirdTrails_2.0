@@ -16,12 +16,12 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, role } = req.body;
         if (!name || !email || !password) {
             return res.status(400).json({ message: "Nombre, email y contraseña son obligatorios" });
         }
 
-        const user = await user_service.registerUser(name, email, password);
+        const user = await user_service.registerUser(name, email, password, role);
         res.status(201).json({ message: "Usuario registrado correctamente", user });
     } catch (error) {
         res.status(400).json({ message: error.message });
