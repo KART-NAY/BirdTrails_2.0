@@ -5,7 +5,7 @@
 const API_URL = "http://localhost:5000/api";
 
 // ==================================================
-// 1. UTILIDAD POLIMÓRFICA / MAPEO SIN CONDICIONALES IF
+// 1. UTILIDAD POLIMÓRFICA / MAPEO SIN CONDICIONALES 
 // ==================================================
 
 function ejecutarPorCondicion(condicion, acciones) {
@@ -389,21 +389,40 @@ async function renderBirds() {
 // 9. MOSTRAR LAS RUTAS (DESDE MYSQL)
 // ==================================================
 
-function crearHtmlCartillaZona(zone, extraActionsHtml = "") {
+function crearHtmlCartillaZona(zone, extraActionsHtml = "", birdsMap = {}) {
     const mapsData = AdapterGoogleMaps.generateQRCodeData(
         zone.name,
         zone.location
     );
 
+    const rutaImagen = zone.image && !zone.image.startsWith("http") && !zone.image.includes("/")
+        ? `imagenes/${zone.image}`
+        : zone.image;
+
+    const avesDesdeBackend = Array.isArray(zone.birdNames) ? zone.birdNames : [];
+    const avesDesdeIds = Array.isArray(zone.birdIds)
+        ? zone.birdIds.map(id => birdsMap[Number(id)]).filter(Boolean)
+        : [];
+    const aves = avesDesdeBackend.length > 0 ? avesDesdeBackend : avesDesdeIds;
+
+    const listaAvesHtml = aves.length > 0
+        ? `<ul>${aves.map(nombre => `<li>${nombre}</li>`).join("")}</ul>`
+        : `<p class="sin-aves">Sin aves asociadas aún.</p>`;
+
     return `
         <article class="ruta">
-            <img src="${zone.image}" alt="${zone.name}">
+            <img src="${rutaImagen}" alt="${zone.name}">
 
             <h3>${zone.name}</h3>
 
             <p>📍 ${zone.location}</p>
 
             <p>${zone.description}</p>
+
+            <div class="aves-zona">
+                <p><strong>Aves que puedes encontrar:</strong></p>
+                ${listaAvesHtml}
+            </div>
 
             <a
                 href="${mapsData.url}"
@@ -433,14 +452,21 @@ async function renderZones() {
     await ejecutarPorCondicion(lista, {
         true: async () => {
             try {
-                const response = await fetch(`${API_URL}/zones`);
-                const zones = await response.json();
+                const [zonesResponse, birdsResponse] = await Promise.all([
+                    fetch(`${API_URL}/zones`),
+                    fetch(`${API_URL}/birds`)
+                ]);
+                const zones = await zonesResponse.json();
+                const birds = birdsResponse.ok ? await birdsResponse.json() : [];
+                const birdsMap = Object.fromEntries(
+                    (Array.isArray(birds) ? birds : []).map(b => [Number(b.id), b.commonName])
+                );
 
-                await ejecutarPorCondicion(response.ok, {
+                await ejecutarPorCondicion(zonesResponse.ok, {
                     false: () => Promise.reject(new Error(zones.message || "Error al obtener rutas.")),
                     true: () => {
                         lista.innerHTML = zones
-                            .map(zone => crearHtmlCartillaZona(zone))
+                            .map(zone => crearHtmlCartillaZona(zone, "", birdsMap))
                             .join("");
                     }
                 });
@@ -546,6 +572,7 @@ async function renderFavorites() {
         }
     });
 }
+
 // ==================================================
 // 11. PANEL DE ADMINISTRACIÓN (ROL ADMIN)
 // ==================================================
@@ -560,6 +587,9 @@ async function cargarSelectorAvesAdmin() {
                 const birds = await response.json();
 
                 ejecutarPorCondicion(response.ok, {
+                    false: () => {
+                        contenedor.innerHTML = "<p>No se pudieron cargar las aves.</p>";
+                    },
                     true: () => {
                         contenedor.innerHTML = birds.map(bird => `
                             <label class="item-ave-check">
@@ -571,35 +601,7 @@ async function cargarSelectorAvesAdmin() {
                 });
             } catch (error) {
                 console.error(error);
-            }
-        }
-    });
-}
-// ==================================================
-// 11. PANEL DE ADMINISTRACIÓN (ROL ADMIN)
-// ==================================================
-
-async function cargarSelectorAvesAdmin() {
-    const contenedor = document.getElementById("selector-aves-zona");
-
-    await ejecutarPorCondicion(contenedor, {
-        true: async () => {
-            try {
-                const response = await fetch(`${API_URL}/birds`);
-                const birds = await response.json();
-
-                ejecutarPorCondicion(response.ok, {
-                    true: () => {
-                        contenedor.innerHTML = birds.map(bird => `
-                            <label class="item-ave-check">
-                                <input type="checkbox" name="zoneBirdIds" value="${bird.id}">
-                                <span>${bird.commonName}</span>
-                            </label>
-                        `).join("");
-                    }
-                });
-            } catch (error) {
-                console.error(error);
+                contenedor.innerHTML = "<p>Error de conexión con el servidor.</p>";
             }
         }
     });
@@ -611,10 +613,18 @@ async function renderAdminZones() {
     await ejecutarPorCondicion(lista, {
         true: async () => {
             try {
-                const response = await fetch(`${API_URL}/zones`);
-                const zones = await response.json();
+                const [zonesResponse, birdsResponse] = await Promise.all([
+                    fetch(`${API_URL}/zones`),
+                    fetch(`${API_URL}/birds`)
+                ]);
+                const zones = await zonesResponse.json();
+                const birds = birdsResponse.ok ? await birdsResponse.json() : [];
+                const birdsMap = Object.fromEntries(
+                    (Array.isArray(birds) ? birds : []).map(b => [Number(b.id), b.commonName])
+                );
 
-                await ejecutarPorCondicion(response.ok, {
+                await ejecutarPorCondicion(zonesResponse.ok, {
+                    false: () => Promise.reject(new Error(zones.message || "Error al obtener zonas.")),
                     true: () => {
                         lista.innerHTML = zones.map(zone => {
                             const acciones = `
@@ -627,7 +637,7 @@ async function renderAdminZones() {
                                     </button>
                                 </div>
                             `;
-                            return crearHtmlCartillaZona(zone, acciones);
+                            return crearHtmlCartillaZona(zone, acciones, birdsMap);
                         }).join("");
 
                         const zonesById = Object.fromEntries(zones.map(z => [String(z.id), z]));
@@ -644,10 +654,19 @@ async function renderAdminZones() {
                                         document.getElementById("zone-image").value = zona.image || "";
                                         document.getElementById("titulo-form-zona").textContent = `Editando cartilla: ${zona.name}`;
 
+                                        const btnGuardar = document.getElementById("btn-guardar-zona");
+                                        if (btnGuardar) btnGuardar.textContent = "Actualizar Cartilla";
+
                                         const asociados = new Set((zona.birdIds || []).map(Number));
                                         document.querySelectorAll('input[name="zoneBirdIds"]').forEach(cb => {
                                             cb.checked = asociados.has(Number(cb.value));
                                         });
+
+                                        const formZona = document.getElementById("form-admin-zona");
+                                        if (formZona) {
+                                            formZona.scrollIntoView({ behavior: "smooth", block: "center" });
+                                            document.getElementById("zone-name").focus();
+                                        }
                                     }
                                 });
                             });
@@ -688,6 +707,7 @@ async function renderAdminZones() {
         }
     });
 }
+
 function limpiarFormularioZona() {
     const formZona = document.getElementById("form-admin-zona");
     ejecutarPorCondicion(formZona, {
@@ -695,6 +715,9 @@ function limpiarFormularioZona() {
             formZona.reset();
             document.getElementById("zone-id").value = "";
             document.getElementById("titulo-form-zona").textContent = "Agregar nueva cartilla de zona";
+
+            const btnGuardar = document.getElementById("btn-guardar-zona");
+            if (btnGuardar) btnGuardar.textContent = "Guardar Cartilla";
         }
     });
 }
@@ -815,7 +838,6 @@ async function conectarAdmin() {
         }
     });
 }
-
 // ==================================================
 // 12. INICIAR SESIÓN
 // ==================================================
