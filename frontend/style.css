@@ -856,3 +856,61 @@ a {
         padding: 20px 14px;
     }
 }
+
+/* PANEL ADMINISTRADOR */
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.formulario-admin {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.selector-aves {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fafafa;
+}
+
+.item-ave-check {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.item-ave-check input {
+    width: auto;
+}
+
+.acciones-ruta {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.acciones-ruta button {
+    flex: 1;
+    margin: 0;
+}
+
+footer {
+    background-color: #1b5e20;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
