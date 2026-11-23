@@ -12,6 +12,9 @@ class Zone {
             image: row.image,
             birdIds: row.birdIdsRaw
                 ? String(row.birdIdsRaw).split(",").map(Number)
+                : [],
+            birdNames: row.birdNamesRaw
+                ? String(row.birdNamesRaw).split("||")
                 : []
         };
     }
@@ -24,10 +27,12 @@ class Zone {
                 z.location,
                 z.description,
                 i.url AS image,
-                GROUP_CONCAT(zb.bird_id) AS birdIdsRaw
+                GROUP_CONCAT(zb.bird_id ORDER BY b.common_name SEPARATOR ',') AS birdIdsRaw,
+                GROUP_CONCAT(b.common_name ORDER BY b.common_name SEPARATOR '||') AS birdNamesRaw
              FROM zone z
              LEFT JOIN image i ON z.image_id = i.id
              LEFT JOIN zone_bird zb ON z.id = zb.zone_id
+             LEFT JOIN bird b ON zb.bird_id = b.id
              GROUP BY z.id, z.name, z.location, z.description, i.url
              ORDER BY z.id ASC`
         );
@@ -42,10 +47,12 @@ class Zone {
                 z.location,
                 z.description,
                 i.url AS image,
-                GROUP_CONCAT(zb.bird_id) AS birdIdsRaw
+                GROUP_CONCAT(zb.bird_id ORDER BY b.common_name SEPARATOR ',') AS birdIdsRaw,
+                GROUP_CONCAT(b.common_name ORDER BY b.common_name SEPARATOR '||') AS birdNamesRaw
              FROM zone z
              LEFT JOIN image i ON z.image_id = i.id
              LEFT JOIN zone_bird zb ON z.id = zb.zone_id
+             LEFT JOIN bird b ON zb.bird_id = b.id
              WHERE z.id = ?
              GROUP BY z.id, z.name, z.location, z.description, i.url`,
             [id]
@@ -54,11 +61,13 @@ class Zone {
     }
 
     static async syncZoneBirds(zoneId, birdIds = []) {
-        await db.query("DELETE FROM zone_bird WHERE zone_id = ?", [zoneId]);
-        for (const birdId of birdIds) {
+        await db.query("DELETE FROM zone_bird WHERE zone_id = ?", [Number(zoneId)]);
+        const uniqueBirdIds = [...new Set(birdIds.map(Number).filter(Boolean))];
+
+        for (const birdId of uniqueBirdIds) {
             await db.query(
-                "INSERT IGNORE INTO zone_bird (zone_id, bird_id) VALUES (?, ?)",
-                [zoneId, Number(birdId)]
+                "INSERT INTO zone_bird (zone_id, bird_id) VALUES (?, ?)",
+                [Number(zoneId), birdId]
             );
         }
     }
