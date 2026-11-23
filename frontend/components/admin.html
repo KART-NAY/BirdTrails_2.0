@@ -1,0 +1,128 @@
+<section>
+    <h2>Panel de Administración</h2>
+    <p>Gestiona el catálogo de especies de aves y las cartillas de zonas de avistamiento.</p>
+
+    <div class="admin-grid">
+        <div class="formulario-admin">
+            <h3>Agregar nueva ave</h3>
+            <form id="form-admin-ave">
+                <div class="campo-formulario">
+                    <label for="bird-common-name">Nombre común</label>
+                    <input type="text" id="bird-common-name" required placeholder="Ej: Barranquero Andino">
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="bird-scientific-name">Nombre científico</label>
+                    <input type="text" id="bird-scientific-name" required placeholder="Ej: Momotus aequatorialis">
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="bird-author">Autor</label>
+                    <input type="text" id="bird-author" placeholder="Ej: Gould, 1858">
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="bird-family">Familia</label>
+                    <input type="text" id="bird-family" required placeholder="Ej: Momotidae">
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="bird-altitudinal-range">Rango altitudinal</label>
+                    <input type="text" id="bird-altitudinal-range" placeholder="Ej: 1500 - 3100 m">
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="bird-size">Tamaño</label>
+                    <input type="text" id="bird-size" placeholder="Ej: 42 cm">
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="bird-sexual-dimorphism">Dimorfismo sexual</label>
+                    <input type="text" id="bird-sexual-dimorphism" placeholder="Sí / No">
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="bird-habitat">Hábitat</label>
+                    <input type="text" id="bird-habitat" required placeholder="Ej: Bosque húmedo andino">
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="bird-presence-type">Tipo de presencia</label>
+                    <input type="text" id="bird-presence-type" placeholder="Residente / Endémica / Migratoria">
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="bird-local-name">Nombre local</label>
+                    <input type="text" id="bird-local-name" placeholder="Ej: Soledad">
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="bird-feeding">Alimentación</label>
+                    <input type="text" id="bird-feeding" required placeholder="Ej: Insectos y frutos">
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="bird-additional-data">Datos adicionales</label>
+                    <textarea id="bird-additional-data" rows="2" placeholder="Observaciones adicionales"></textarea>
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="bird-image">Ruta o URL de imagen</label>
+                    <input type="text" id="bird-image" required placeholder="imagenes/nueva_ave.jpg">
+                </div>
+
+                <button type="submit" class="boton" style="width: 100%;">
+                    Guardar Ave
+                </button>
+            </form>
+        </div>
+
+        <div class="formulario-admin">
+            <h3 id="titulo-form-zona">Agregar nueva cartilla de zona</h3>
+            <form id="form-admin-zona">
+                <input type="hidden" id="zone-id">
+
+                <div class="campo-formulario">
+                    <label for="zone-name">Nombre de la zona / ruta</label>
+                    <input type="text" id="zone-name" required placeholder="Ej: Sendero El Robledal">
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="zone-location">Ubicación</label>
+                    <input type="text" id="zone-location" required placeholder="Ej: Popayán - Vereda El Tablón">
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="zone-description">Descripción</label>
+                    <textarea id="zone-description" rows="3" required placeholder="Descripción de la ruta de avistamiento"></textarea>
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="zone-image">Ruta o URL de imagen</label>
+                    <input type="text" id="zone-image" required placeholder="imagenes/zona_nueva.jpg">
+                </div>
+
+                <div class="campo-formulario">
+                    <label>Aves presentes en esta zona</label>
+                    <div id="selector-aves-zona" class="selector-aves">
+                        <p>Cargando aves...</p>
+                    </div>
+                </div>
+
+                <div class="acciones-ruta">
+                    <button type="submit" class="boton">
+                        Guardar Cartilla
+                    </button>
+                    <button type="button" id="btn-cancelar-zona" class="boton-eliminar-favorito">
+                        Limpiar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <h3>Cartillas de zonas registradas</h3>
+    <div class="contenedor-rutas" id="lista-admin-zonas">
+        <p>Cargando cartillas de zonas...</p>
+    </div>
+</section>

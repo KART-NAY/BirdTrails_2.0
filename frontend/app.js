@@ -1,292 +1,21 @@
+// ==================================================
+// CONFIGURACIÓN GENERAL DE LA APLICACIÓN
+// ==================================================
+
 const API_URL = "http://localhost:5000/api";
 
 // ==================================================
-// 1. DATOS DE LAS AVES
+// 1. UTILIDAD POLIMÓRFICA / MAPEO SIN CONDICIONALES IF
 // ==================================================
 
-const BIRDS_DATA = [
-    {
-        id: "pava_monte",
-        commonName: "Pava de Monte",
-        scientificName: "Penelope montagnii",
-        author: "Bonaparte, 1856",
-        family: "Cracidae",
-        altitudinalRange: "1500 - 3500 m",
-        size: "60 cm",
-        sexualDimorphism: "No",
-        habitat: "Bosque de niebla / Andino",
-        presenceType: "Residente",
-        localName: "Pava",
-        feeding: "Frutos y brotes",
-        additionalData: "Ave arborícola vulnerable a la pérdida de hábitat.",
-        image: "imagenes/pava_de_monte.png"
-    },
-    {
-        id: "pava_guacharacha",
-        commonName: "Guacharacha",
-        scientificName: "Ortalis columbiana",
-        author: "Hellmayr, 1906",
-        family: "Cracidae",
-        altitudinalRange: "1000 - 2500 m",
-        size: "50 cm",
-        sexualDimorphism: "No",
-        habitat: "Matorrales y bordes de bosque",
-        presenceType: "Endémica",
-        localName: "Guacharacha",
-        feeding: "Semillas y frutas",
-        additionalData: "Muy ruidosa y territorial.",
-        image: "imagenes/pava_guacharacha.jpg"
-    },
-    {
-        id: "caminera_cabeciazul",
-        commonName: "Caminera Cabeciazul",
-        scientificName: "Leptotila conoveri",
-        author: "Bond & Meyer de Schauensee, 1943",
-        family: "Columbidae",
-        altitudinalRange: "1200 - 2200 m",
-        size: "25 cm",
-        sexualDimorphism: "No",
-        habitat: "Suelo de bosque húmedo",
-        presenceType: "Endémica",
-        localName: "Caminera azul",
-        feeding: "Granos y pequeños invertebrados",
-        additionalData: "Especie terrestre difícil de avistar.",
-        image: "imagenes/caminera_cabeciazul.jpg"
-    },
-    {
-        id: "caminera_rabiblanca",
-        commonName: "Caminera Rabiblanca",
-        scientificName: "Leptotila verreauxi",
-        author: "Bonaparte, 1855",
-        family: "Columbidae",
-        altitudinalRange: "0 - 2600 m",
-        size: "28 cm",
-        sexualDimorphism: "No",
-        habitat: "Bosques secos y áreas abiertas",
-        presenceType: "Residente",
-        localName: "Paloma caminera",
-        feeding: "Semillas en el suelo",
-        additionalData: "Camina frecuentemente por senderos.",
-        image: "imagenes/caminera_rabiblanca.jpg"
-    },
-    {
-        id: "paloma_colorada",
-        commonName: "Paloma Colorada",
-        scientificName: "Patagioenas subvinacea",
-        author: "Lawrence, 1868",
-        family: "Columbidae",
-        altitudinalRange: "1000 - 2800 m",
-        size: "30 cm",
-        sexualDimorphism: "No",
-        habitat: "Dosel del bosque",
-        presenceType: "Residente",
-        localName: "Paloma de monte",
-        feeding: "Frutas silvestres",
-        additionalData: "Habita en las copas de los árboles.",
-        image: "imagenes/paloma_colorada.jpg"
-    },
-    {
-        id: "paloma_comun",
-        commonName: "Paloma Común",
-        scientificName: "Columba livia",
-        author: "Gmelin, 1789",
-        family: "Columbidae",
-        altitudinalRange: "0 - 3000 m",
-        size: "32 cm",
-        sexualDimorphism: "No",
-        habitat: "Zonas urbanas",
-        presenceType: "Introducida",
-        localName: "Paloma de plaza",
-        feeding: "Semillas y desperdicios",
-        additionalData: "Adaptada completamente a la vida urbana.",
-        image: "imagenes/Paloma_comun.jpg"
-    },
-    {
-        id: "paloma_collar",
-        commonName: "Paloma de Collar",
-        scientificName: "Patagioenas fasciata",
-        author: "Say, 1823",
-        family: "Columbidae",
-        altitudinalRange: "1500 - 3300 m",
-        size: "35 cm",
-        sexualDimorphism: "No",
-        habitat: "Bosques de robles y altoandinos",
-        presenceType: "Residente",
-        localName: "Torcaza alta",
-        feeding: "Bellotas y frutos",
-        additionalData: "Se desplaza en bandadas grandes.",
-        image: "imagenes/paloma_de_collar.jpg"
-    },
-    {
-        id: "perdiz_comun",
-        commonName: "Perdiz Común",
-        scientificName: "Nothoprocta curvirostris",
-        author: "Sclater & Salvin, 1873",
-        family: "Tinamidae",
-        altitudinalRange: "2500 - 3800 m",
-        size: "28 cm",
-        sexualDimorphism: "No",
-        habitat: "Páramo y subpáramo",
-        presenceType: "Residente",
-        localName: "Perdiz de páramo",
-        feeding: "Semillas y raíces",
-        additionalData: "Vuela únicamente en tramos muy cortos.",
-        image: "imagenes/Perdiz_comun.jpg"
-    },
-    {
-        id: "torcaza_naguiblanca",
-        commonName: "Torcaza Naguiblanca",
-        scientificName: "Zenaida auriculata",
-        author: "Des Murs, 1847",
-        family: "Columbidae",
-        altitudinalRange: "0 - 3000 m",
-        size: "24 cm",
-        sexualDimorphism: "No",
-        habitat: "Campos abiertos y cultivos",
-        presenceType: "Residente",
-        localName: "Torcaza",
-        feeding: "Semillas de cereales",
-        additionalData: "Muy abundante en zonas agrícolas.",
-        image: "imagenes/Torcaza_naguiblanca.jpg"
-    },
-    {
-        id: "tortolita_diminuta",
-        commonName: "Tortolita Diminuta",
-        scientificName: "Columbina minuta",
-        author: "Linnaeus, 1766",
-        family: "Columbidae",
-        altitudinalRange: "0 - 1800 m",
-        size: "15 cm",
-        sexualDimorphism: "Sí",
-        habitat: "Matorrales secos",
-        presenceType: "Residente",
-        localName: "Tortolita",
-        feeding: "Semillas pequeñas",
-        additionalData: "Una de las palomas más pequeñas de Colombia.",
-        image: "imagenes/Tortolita_diminuta.jpg"
-    }
-];
-
-// ==================================================
-// 2. DATOS DE LAS RUTAS
-// ==================================================
-
-const ZONES_DATA = [
-    {
-        id: 1,
-        name: "Sendero Los Arrayanales",
-        location: "Popayán - Vereda La Rejoya",
-        description: "Ruta rodeada de vegetación nativa ideal para el avistamiento de aves de bosque altoandino.",
-        image: "imagenes/zona.arrayanales.jpg"
-    },
-    {
-        id: 2,
-        name: "Reserva El Oasis",
-        location: "Popayán - Sector Norte",
-        description: "Espacio protegido con humedales y senderos rodeados de árboles de gran porte.",
-        image: "imagenes/zona.oasis.jpg"
-    },
-    {
-        id: 3,
-        name: "Ruta Rayo de Sol",
-        location: "Popayán - Vereda Clara",
-        description: "Recorrido con buena visibilidad matutina para observación de torcazas y perdices.",
-        image: "imagenes/zona.rayo.sol.jpg"
-    },
-    {
-        id: 4,
-        name: "Sendero Ecologico Principal",
-        location: "Popayán - Parque Ecológico",
-        description: "Sendero accesible para principiantes en la observación de aves urbanas y periurbanas.",
-        image: "imagenes/zona.sendero.jpg"
-    },
-    {
-        id: 5,
-        name: "Mirador Barranquero",
-        location: "Popayán - Vereda San Bernardino",
-        description: "Punto elevado preferido para observar especies de dosel y aves ruidosas.",
-        image: "imagenes/zona_barranquero.jpg"
-    }
-];
-
-// ==================================================
-// 3. PATRÓN BUILDER
-// ==================================================
-
-class BirdTechnicalSheetBuilder {
-    constructor(data) {
-        this.bird = { ...data };
-        this.bird.id = this.resolveBirdId();
-    }
-
-    resolveBirdId() {
-        if (this.bird.id) return this.bird.id;
-
-        if (this.bird.commonName) {
-            return this.bird.commonName
-                .toLowerCase()
-                .replaceAll(" ", "_");
-        }
-
-        return "ave_desconocida";
-    }
-
-    setClassification() {
-        this.bird.classification = {
-            family: this.bird.family,
-            author: this.bird.author,
-            scientificName: this.bird.scientificName
-        };
-
-        return this;
-    }
-
-    setBiometrics() {
-        this.bird.biometrics = {
-            size: this.bird.size,
-            sexualDimorphism: this.bird.sexualDimorphism
-        };
-
-        return this;
-    }
-
-    setEcology() {
-        this.bird.ecology = {
-            altitudinalRange: this.bird.altitudinalRange,
-            habitat: this.bird.habitat,
-            presenceType: this.bird.presenceType,
-            feeding: this.bird.feeding
-        };
-
-        return this;
-    }
-
-    build() {
-        return {
-            id: this.bird.id,
-            commonName: this.bird.commonName,
-            localName: this.bird.localName,
-            image: this.bird.image,
-            additionalData: this.bird.additionalData,
-            classification: this.bird.classification,
-            biometrics: this.bird.biometrics,
-            ecology: this.bird.ecology
-        };
-    }
-}
-
-class BirdBuilderService {
-    static buildDetailedSheet(birdRaw) {
-        return new BirdTechnicalSheetBuilder(birdRaw)
-            .setClassification()
-            .setBiometrics()
-            .setEcology()
-            .build();
-    }
+function ejecutarPorCondicion(condicion, acciones) {
+    const clave = Boolean(condicion);
+    const accion = acciones[clave] || (() => {});
+    return accion();
 }
 
 // ==================================================
-// 4. PATRÓN ADAPTER
+// 2. PATRÓN ADAPTER
 // ==================================================
 
 class AdapterGoogleMaps {
@@ -307,7 +36,7 @@ class AdapterGoogleMaps {
 }
 
 // ==================================================
-// 5. ESTADO DE LA APLICACIÓN
+// 3. ESTADO DE LA APLICACIÓN Y ROLES
 // ==================================================
 
 function obtenerUsuarioGuardado() {
@@ -322,9 +51,65 @@ const state = {
     user: obtenerUsuarioGuardado()
 };
 
+const PUBLIC_ROUTES = {
+    "#/login": "login",
+    "#/registro": "registro"
+};
+
+const ROLE_STRATEGIES = {
+    normal: {
+        defaultRoute: "#/inicio",
+        birdCardAction: "favorite",
+        navVisibility: {
+            "nav-admin": "none",
+            "nav-inicio": "list-item",
+            "nav-aves": "list-item",
+            "nav-rutas": "list-item",
+            "nav-recomendaciones": "list-item",
+            "nav-favoritos": "list-item"
+        },
+        routes: {
+            "#/inicio": "inicio",
+            "#/aves": "aves",
+            "#/rutas": "rutas",
+            "#/recomendaciones": "recomendaciones",
+            "#/favoritos": "favoritos"
+        }
+    },
+    admin: {
+        defaultRoute: "#/admin",
+        birdCardAction: "delete",
+        navVisibility: {
+            "nav-admin": "list-item",
+            "nav-inicio": "none",
+            "nav-aves": "list-item",
+            "nav-rutas": "list-item",
+            "nav-recomendaciones": "none",
+            "nav-favoritos": "none"
+        },
+        routes: {
+            "#/admin": "admin",
+            "#/aves": "aves",
+            "#/rutas": "rutas"
+        }
+    }
+};
+
+function getRoleStrategy(role) {
+    return ROLE_STRATEGIES[role] || ROLE_STRATEGIES.normal;
+}
 // ==================================================
-// 6. CARGA DE COMPONENTES HTML
+// 4. CARGA DE COMPONENTES HTML
 // ==================================================
+
+const COMPONENT_HANDLERS = {
+    aves: renderBirds,
+    rutas: renderZones,
+    favoritos: renderFavorites,
+    login: conectarLogin,
+    registro: conectarRegistro,
+    admin: conectarAdmin
+};
 
 async function cargarComponente(nombre) {
     const contenedor = document.getElementById("app-content");
@@ -332,34 +117,15 @@ async function cargarComponente(nombre) {
     try {
         const respuesta = await fetch(`components/${nombre}.html`);
 
-        if (!respuesta.ok) {
-            throw new Error(`No se pudo cargar components/${nombre}.html`);
-        }
+        const contenidoHtml = await ejecutarPorCondicion(respuesta.ok, {
+            true: () => respuesta.text(),
+            false: () => Promise.reject(new Error(`No se pudo cargar components/${nombre}.html`))
+        });
 
-        contenedor.innerHTML = await respuesta.text();
+        contenedor.innerHTML = contenidoHtml;
 
-        // Ejecutar la lógica correspondiente al componente cargado.
-        switch (nombre) {
-            case "aves":
-                renderBirds();
-                break;
-
-            case "rutas":
-                renderZones();
-                break;
-
-            case "favoritos":
-                await renderFavorites();
-                break;
-
-            case "login":
-                conectarLogin();
-                break;
-
-            case "registro":
-                conectarRegistro();
-                break;
-        }
+        const handler = COMPONENT_HANDLERS[nombre] || (() => {});
+        await handler();
     } catch (error) {
         console.error("Error al cargar el componente:", error);
 
@@ -374,7 +140,7 @@ async function cargarComponente(nombre) {
 }
 
 // ==================================================
-// 7. INICIO DE LA APLICACIÓN
+// 5. INICIO DE LA APLICACIÓN
 // ==================================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -383,397 +149,779 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ==================================================
-// 8. MENÚ Y SESIÓN
+// 6. MENÚ Y SESIÓN
 // ==================================================
 
 function updateSessionState() {
     const mainNav = document.getElementById("main-nav");
     const linkSesion = document.getElementById("link-sesion");
 
-    if (!mainNav) return;
+    ejecutarPorCondicion(mainNav, {
+        true: () => {
+            ejecutarPorCondicion(state.user, {
+                true: () => {
+                    mainNav.style.display = "block";
+                    const strategy = getRoleStrategy(state.user.role);
 
-    if (state.user) {
-        mainNav.style.display = "block";
+                    Object.entries(strategy.navVisibility).forEach(([navId, displayValue]) => {
+                        const navItem = document.getElementById(navId);
+                        ejecutarPorCondicion(navItem, {
+                            true: () => {
+                                navItem.style.display = displayValue;
+                            }
+                        });
+                    });
 
-        if (linkSesion) {
-            linkSesion.innerHTML = `
-                <span class="icono-usuario">👤</span>
-                <span class="texto-sesion">Hola, ${state.user.name} (Cerrar sesión)</span>
-            `;
-
-            linkSesion.href = "#/logout";
-        }
-    } else {
-        mainNav.style.display = "none";
-    }
-}
-
-// ==================================================
-// 9. ENRUTADOR SPA
-// ==================================================
-
-async function router() {
-    const hash = window.location.hash ||
-        (state.user ? "#/inicio" : "#/login");
-
-    if (hash === "#/logout") {
-        localStorage.removeItem("user");
-        state.user = null;
-        updateSessionState();
-        window.location.hash = "#/login";
-        return;
-    }
-
-    // Proteger las páginas privadas.
-    if (
-        !state.user &&
-        hash !== "#/login" &&
-        hash !== "#/registro"
-    ) {
-        window.location.hash = "#/login";
-        return;
-    }
-
-    // Si ya inició sesión, no debe volver a login o registro.
-    if (
-        state.user &&
-        (hash === "#/login" || hash === "#/registro")
-    ) {
-        window.location.hash = "#/inicio";
-        return;
-    }
-
-    updateSessionState();
-
-    const componentes = {
-        "#/inicio": "inicio",
-        "#/aves": "aves",
-        "#/rutas": "rutas",
-        "#/recomendaciones": "recomendaciones",
-        "#/favoritos": "favoritos",
-        "#/login": "login",
-        "#/registro": "registro"
-    };
-
-    const componente = componentes[hash] || "inicio";
-
-    await cargarComponente(componente);
-}
-
-// ==================================================
-// 10. MOSTRAR LAS AVES
-// ==================================================
-
-function renderBirds() {
-    const lista = document.getElementById("lista-aves");
-
-    if (!lista) return;
-
-    const processedBirds = BIRDS_DATA.map(bird =>
-        BirdBuilderService.buildDetailedSheet(bird)
-    );
-
-    lista.innerHTML = processedBirds.map(bird => `
-        <div class="ave">
-            <img src="${bird.image}" alt="${bird.commonName}">
-
-            <h3>${bird.commonName}</h3>
-
-            <p><em>${bird.classification.scientificName}</em></p>
-
-            <p><strong>Familia:</strong> ${bird.classification.family}</p>
-
-            <p><strong>Hábitat:</strong> ${bird.ecology.habitat}</p>
-
-            <p><strong>Alimentación:</strong> ${bird.ecology.feeding}</p>
-
-            <button
-                type="button"
-                class="boton-favorito"
-                data-id="${bird.id}">
-                ♡ Agregar a Favoritos
-            </button>
-        </div>
-    `).join("");
-
-    lista.querySelectorAll(".boton-favorito").forEach(button => {
-        button.addEventListener("click", async () => {
-            if (!state.user) {
-                alert("Debes iniciar sesión.");
-                window.location.hash = "#/login";
-                return;
-            }
-
-            const birdId = button.dataset.id;
-
-            try {
-                const response = await fetch(`${API_URL}/favorites`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        userId: state.user.id,
-                        birdId
-                    })
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    alert(data.message || "No se pudo agregar el favorito.");
-                    return;
+                    ejecutarPorCondicion(linkSesion, {
+                        true: () => {
+                            linkSesion.innerHTML = `
+                                <span class="icono-usuario">👤</span>
+                                <span class="texto-sesion">Hola, ${state.user.name} (Cerrar sesión)</span>
+                            `;
+                            linkSesion.href = "#/logout";
+                        }
+                    });
+                },
+                false: () => {
+                    mainNav.style.display = "none";
                 }
-
-                alert(data.message || "Ave agregada a favoritos.");
-            } catch (error) {
-                console.error(error);
-                alert("Error al conectar con el servidor.");
-            }
-        });
+            });
+        }
     });
 }
 
 // ==================================================
-// 11. MOSTRAR LAS RUTAS
+// 7. ENRUTADOR SPA
 // ==================================================
 
-function renderZones() {
-    const lista = document.getElementById("lista-rutas");
+async function router() {
+    const defaultHashes = {
+        true: () => getRoleStrategy(state.user?.role).defaultRoute,
+        false: () => "#/login"
+    };
 
-    if (!lista) return;
+    const hash = window.location.hash || defaultHashes[Boolean(state.user)]();
 
-    lista.innerHTML = ZONES_DATA.map(zone => {
-        const mapsData = AdapterGoogleMaps.generateQRCodeData(
-            zone.name,
-            zone.location
-        );
+    const specialRoutes = {
+        "#/logout": async () => {
+            localStorage.removeItem("user");
+            state.user = null;
+            updateSessionState();
+            window.location.hash = "#/login";
+        }
+    };
 
-        return `
-            <article class="ruta">
-                <img src="${zone.image}" alt="${zone.name}">
+    const routeDispatcher = specialRoutes[hash] || (async () => {
+        await ejecutarPorCondicion(state.user, {
+            false: async () => {
+                const publicComponent = PUBLIC_ROUTES[hash];
+                await ejecutarPorCondicion(publicComponent, {
+                    true: async () => {
+                        updateSessionState();
+                        await cargarComponente(publicComponent);
+                    },
+                    false: async () => {
+                        window.location.hash = "#/login";
+                    }
+                });
+            },
+            true: async () => {
+                const strategy = getRoleStrategy(state.user.role);
+                const privateComponent = strategy.routes[hash];
+                await ejecutarPorCondicion(privateComponent, {
+                    true: async () => {
+                        updateSessionState();
+                        await cargarComponente(privateComponent);
+                    },
+                    false: async () => {
+                        window.location.hash = strategy.defaultRoute;
+                    }
+                });
+            }
+        });
+    });
 
-                <h3>${zone.name}</h3>
-
-                <p>📍 ${zone.location}</p>
-
-                <p>${zone.description}</p>
-
-                <a
-                    href="${mapsData.url}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="boton"
-                    style="display:inline-block; margin-top:10px;">
-                    📍 Ver en Google Maps
-                </a>
-
-                <div class="qr-container">
-                    <p><strong>Escanea para llegar:</strong></p>
-
-                    <img
-                        src="${mapsData.qrApiUrl}"
-                        alt="Código QR ${zone.name}">
-                </div>
-            </article>
-        `;
-    }).join("");
+    await routeDispatcher();
 }
 
 // ==================================================
-// 12. MOSTRAR FAVORITOS
+// 8. MOSTRAR LAS AVES (DESDE MYSQL)
 // ==================================================
 
-async function renderFavorites() {
-    const lista = document.getElementById("lista-favoritos");
+const BIRD_CARD_BUTTON_TEMPLATES = {
+    favorite: bird => `
+        <button
+            type="button"
+            class="boton-favorito"
+            data-id="${bird.id}">
+            ♡ Agregar a Favoritos
+        </button>
+    `,
+    delete: bird => `
+        <button
+            type="button"
+            class="boton-eliminar-favorito boton-eliminar-ave"
+            data-id="${bird.id}">
+            Eliminar Ave
+        </button>
+    `
+};
 
-    if (!lista) return;
-
-    if (!state.user) {
-        lista.innerHTML = "<p>Debes iniciar sesión para ver tus favoritos.</p>";
-        return;
-    }
-
-    lista.innerHTML = "<p>Cargando favoritos...</p>";
-
-    try {
-        const response = await fetch(
-            `${API_URL}/favorites?userId=${encodeURIComponent(state.user.id)}`
-        );
-
-        const favorites = await response.json();
-
-        if (!response.ok) {
-            throw new Error(favorites.message || "Error al obtener favoritos.");
-        }
-
-        if (!Array.isArray(favorites) || favorites.length === 0) {
-            lista.innerHTML = "<p>Aún no has agregado aves a tus favoritos.</p>";
-            return;
-        }
-
-        const favoriteBirds = favorites
-            .map(favorite =>
-                BIRDS_DATA.find(bird => bird.id === favorite.birdId)
-            )
-            .filter(Boolean);
-
-        if (favoriteBirds.length === 0) {
-            lista.innerHTML = "<p>No se encontraron aves favoritas.</p>";
-            return;
-        }
-
-        lista.innerHTML = favoriteBirds.map(bird => `
-            <div class="ave">
-                <img src="${bird.image}" alt="${bird.commonName}">
-
-                <h3>${bird.commonName}</h3>
-
-                <p><em>${bird.scientificName}</em></p>
-
-                <p><strong>Nombre local:</strong> ${bird.localName}</p>
-
-                <button
-                    type="button"
-                    class="boton-eliminar-favorito"
-                    data-id="${bird.id}">
-                    Eliminar de Favoritos
-                </button>
-            </div>
-        `).join("");
-
-        lista.querySelectorAll(".boton-eliminar-favorito").forEach(button => {
+const BIRD_CARD_ACTION_BINDERS = {
+    favorite: lista => {
+        lista.querySelectorAll(".boton-favorito").forEach(button => {
             button.addEventListener("click", async () => {
-                const birdId = button.dataset.id;
+                await ejecutarPorCondicion(state.user, {
+                    false: () => {
+                        alert("Debes iniciar sesión.");
+                        window.location.hash = "#/login";
+                    },
+                    true: async () => {
+                        const birdId = Number(button.dataset.id);
+
+                        try {
+                            const favResponse = await fetch(`${API_URL}/favorites`, {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    userId: state.user.id,
+                                    birdId
+                                })
+                            });
+
+                            const data = await favResponse.json();
+
+                            ejecutarPorCondicion(favResponse.ok, {
+                                false: () => alert(data.message || "No se pudo agregar el favorito."),
+                                true: () => alert(data.message || "Ave agregada a favoritos.")
+                            });
+                        } catch (error) {
+                            console.error(error);
+                            alert("Error al conectar con el servidor.");
+                        }
+                    }
+                });
+            });
+        });
+    },
+    delete: lista => {
+        lista.querySelectorAll(".boton-eliminar-ave").forEach(button => {
+            button.addEventListener("click", async () => {
+                const birdId = Number(button.dataset.id);
 
                 try {
-                    const response = await fetch(`${API_URL}/favorites`, {
+                    const delResponse = await fetch(`${API_URL}/birds/${encodeURIComponent(birdId)}`, {
                         method: "DELETE",
                         headers: {
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            userId: state.user.id,
-                            birdId
+                            userId: state.user.id
                         })
                     });
 
-                    const data = await response.json();
+                    const data = await delResponse.json();
 
-                    if (!response.ok) {
-                        alert(data.message || "No se pudo eliminar el favorito.");
-                        return;
-                    }
-
-                    alert(data.message || "Favorito eliminado.");
-                    await renderFavorites();
+                    await ejecutarPorCondicion(delResponse.ok, {
+                        false: () => alert(data.message || "No se pudo eliminar el ave."),
+                        true: async () => {
+                            alert(data.message || "Ave eliminada correctamente.");
+                            await renderBirds();
+                        }
+                    });
                 } catch (error) {
                     console.error(error);
-                    alert("Error al eliminar favorito.");
+                    alert("Error al conectar con el servidor.");
                 }
             });
         });
-    } catch (error) {
-        console.error(error);
-        lista.innerHTML = "<p>Error al obtener tus favoritos.</p>";
     }
-}
+};
 
-// ==================================================
-// 13. INICIAR SESIÓN
-// ==================================================
+async function renderBirds() {
+    const lista = document.getElementById("lista-aves");
 
-function conectarLogin() {
-    const formulario = document.getElementById("form-login");
+    await ejecutarPorCondicion(lista, {
+        true: async () => {
+            try {
+                const response = await fetch(`${API_URL}/birds`);
+                const processedBirds = await response.json();
 
-    if (!formulario) {
-        console.error("No se encontró el formulario form-login en login.html");
-        return;
-    }
+                await ejecutarPorCondicion(response.ok, {
+                    false: () => Promise.reject(new Error(processedBirds.message || "Error al obtener aves.")),
+                    true: () => {
+                        const strategy = getRoleStrategy(state.user?.role);
+                        const renderActionButton = BIRD_CARD_BUTTON_TEMPLATES[strategy.birdCardAction] || (() => "");
 
-    formulario.addEventListener("submit", async event => {
-        event.preventDefault();
+                        lista.innerHTML = processedBirds.map(bird => `
+                            <div class="ave">
+                                <img src="${bird.image}" alt="${bird.commonName}">
 
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
+                                <h3>${bird.commonName}</h3>
 
-        try {
-            const response = await fetch(`${API_URL}/users/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ email, password })
-            });
+                                <p><em>${bird.classification.scientificName}</em></p>
 
-            const data = await response.json();
+                                <p><strong>Familia:</strong> ${bird.classification.family}</p>
 
-            if (!response.ok) {
-                alert(data.message || "No se pudo iniciar sesión.");
-                return;
+                                <p><strong>Hábitat:</strong> ${bird.ecology.habitat}</p>
+
+                                <p><strong>Alimentación:</strong> ${bird.ecology.feeding}</p>
+
+                                ${renderActionButton(bird)}
+                            </div>
+                        `).join("");
+
+                        const bindAction = BIRD_CARD_ACTION_BINDERS[strategy.birdCardAction] || (() => {});
+                        bindAction(lista);
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+                lista.innerHTML = "<p>Error al cargar las aves desde la base de datos.</p>";
             }
-
-            if (!data.user) {
-                alert("El servidor no devolvió los datos del usuario.");
-                return;
-            }
-
-            state.user = data.user;
-            localStorage.setItem("user", JSON.stringify(data.user));
-
-            updateSessionState();
-            window.location.hash = "#/inicio";
-        } catch (error) {
-            console.error(error);
-            alert("No se pudo conectar con el servidor.");
         }
     });
 }
 
 // ==================================================
-// 14. REGISTRAR USUARIO
+// 9. MOSTRAR LAS RUTAS (DESDE MYSQL)
+// ==================================================
+
+function crearHtmlCartillaZona(zone, extraActionsHtml = "") {
+    const mapsData = AdapterGoogleMaps.generateQRCodeData(
+        zone.name,
+        zone.location
+    );
+
+    return `
+        <article class="ruta">
+            <img src="${zone.image}" alt="${zone.name}">
+
+            <h3>${zone.name}</h3>
+
+            <p>📍 ${zone.location}</p>
+
+            <p>${zone.description}</p>
+
+            <a
+                href="${mapsData.url}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="boton"
+                style="display:inline-block; margin-top:10px;">
+                📍 Ver en Google Maps
+            </a>
+
+            <div class="qr-container">
+                <p><strong>Escanea para llegar:</strong></p>
+
+                <img
+                    src="${mapsData.qrApiUrl}"
+                    alt="Código QR ${zone.name}">
+            </div>
+
+            ${extraActionsHtml}
+        </article>
+    `;
+}
+
+async function renderZones() {
+    const lista = document.getElementById("lista-rutas");
+
+    await ejecutarPorCondicion(lista, {
+        true: async () => {
+            try {
+                const response = await fetch(`${API_URL}/zones`);
+                const zones = await response.json();
+
+                await ejecutarPorCondicion(response.ok, {
+                    false: () => Promise.reject(new Error(zones.message || "Error al obtener rutas.")),
+                    true: () => {
+                        lista.innerHTML = zones
+                            .map(zone => crearHtmlCartillaZona(zone))
+                            .join("");
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+                lista.innerHTML = "<p>Error al cargar las rutas de avistamiento.</p>";
+            }
+        }
+    });
+}
+// ==================================================
+// 10. MOSTRAR FAVORITOS (DESDE MYSQL)
+// ==================================================
+
+async function renderFavorites() {
+    const lista = document.getElementById("lista-favoritos");
+
+    await ejecutarPorCondicion(lista, {
+        true: async () => {
+            await ejecutarPorCondicion(state.user, {
+                false: () => {
+                    lista.innerHTML = "<p>Debes iniciar sesión para ver tus favoritos.</p>";
+                },
+                true: async () => {
+                    lista.innerHTML = "<p>Cargando favoritos...</p>";
+
+                    try {
+                        const response = await fetch(
+                            `${API_URL}/favorites?userId=${encodeURIComponent(state.user.id)}`
+                        );
+                        const favorites = await response.json();
+
+                        await ejecutarPorCondicion(response.ok, {
+                            false: () => Promise.reject(new Error(favorites.message || "Error al obtener favoritos.")),
+                            true: () => {
+                                const hasFavorites = Array.isArray(favorites) && favorites.length > 0;
+
+                                ejecutarPorCondicion(hasFavorites, {
+                                    false: () => {
+                                        lista.innerHTML = "<p>Aún no has agregado aves a tus favoritos.</p>";
+                                    },
+                                    true: () => {
+                                        lista.innerHTML = favorites.map(bird => `
+                                            <div class="ave">
+                                                <img src="${bird.image}" alt="${bird.commonName}">
+
+                                                <h3>${bird.commonName}</h3>
+
+                                                <p><em>${bird.scientificName}</em></p>
+
+                                                <p><strong>Nombre local:</strong> ${bird.localName}</p>
+
+                                                <button
+                                                    type="button"
+                                                    class="boton-eliminar-favorito"
+                                                    data-id="${bird.birdId}">
+                                                    Eliminar de Favoritos
+                                                </button>
+                                            </div>
+                                        `).join("");
+
+                                        lista.querySelectorAll(".boton-eliminar-favorito").forEach(button => {
+                                            button.addEventListener("click", async () => {
+                                                const birdId = Number(button.dataset.id);
+
+                                                try {
+                                                    const deleteResponse = await fetch(`${API_URL}/favorites`, {
+                                                        method: "DELETE",
+                                                        headers: {
+                                                            "Content-Type": "application/json"
+                                                        },
+                                                        body: JSON.stringify({
+                                                            userId: state.user.id,
+                                                            birdId
+                                                        })
+                                                    });
+
+                                                    const data = await deleteResponse.json();
+
+                                                    await ejecutarPorCondicion(deleteResponse.ok, {
+                                                        false: () => alert(data.message || "No se pudo eliminar el favorito."),
+                                                        true: async () => {
+                                                            alert(data.message || "Favorito eliminado.");
+                                                            await renderFavorites();
+                                                        }
+                                                    });
+                                                } catch (error) {
+                                                    console.error(error);
+                                                    alert("Error al eliminar favorito.");
+                                                }
+                                            });
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    } catch (error) {
+                        console.error(error);
+                        lista.innerHTML = "<p>Error al obtener tus favoritos.</p>";
+                    }
+                }
+            });
+        }
+    });
+}
+// ==================================================
+// 11. PANEL DE ADMINISTRACIÓN (ROL ADMIN)
+// ==================================================
+
+async function cargarSelectorAvesAdmin() {
+    const contenedor = document.getElementById("selector-aves-zona");
+
+    await ejecutarPorCondicion(contenedor, {
+        true: async () => {
+            try {
+                const response = await fetch(`${API_URL}/birds`);
+                const birds = await response.json();
+
+                ejecutarPorCondicion(response.ok, {
+                    true: () => {
+                        contenedor.innerHTML = birds.map(bird => `
+                            <label class="item-ave-check">
+                                <input type="checkbox" name="zoneBirdIds" value="${bird.id}">
+                                <span>${bird.commonName}</span>
+                            </label>
+                        `).join("");
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    });
+}
+// ==================================================
+// 11. PANEL DE ADMINISTRACIÓN (ROL ADMIN)
+// ==================================================
+
+async function cargarSelectorAvesAdmin() {
+    const contenedor = document.getElementById("selector-aves-zona");
+
+    await ejecutarPorCondicion(contenedor, {
+        true: async () => {
+            try {
+                const response = await fetch(`${API_URL}/birds`);
+                const birds = await response.json();
+
+                ejecutarPorCondicion(response.ok, {
+                    true: () => {
+                        contenedor.innerHTML = birds.map(bird => `
+                            <label class="item-ave-check">
+                                <input type="checkbox" name="zoneBirdIds" value="${bird.id}">
+                                <span>${bird.commonName}</span>
+                            </label>
+                        `).join("");
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    });
+}
+
+async function renderAdminZones() {
+    const lista = document.getElementById("lista-admin-zonas");
+
+    await ejecutarPorCondicion(lista, {
+        true: async () => {
+            try {
+                const response = await fetch(`${API_URL}/zones`);
+                const zones = await response.json();
+
+                await ejecutarPorCondicion(response.ok, {
+                    true: () => {
+                        lista.innerHTML = zones.map(zone => {
+                            const acciones = `
+                                <div class="acciones-ruta">
+                                    <button type="button" class="boton-favorito boton-editar-zona" data-id="${zone.id}">
+                                        Editar cartilla
+                                    </button>
+                                    <button type="button" class="boton-eliminar-favorito boton-eliminar-zona" data-id="${zone.id}">
+                                        Eliminar cartilla
+                                    </button>
+                                </div>
+                            `;
+                            return crearHtmlCartillaZona(zone, acciones);
+                        }).join("");
+
+                        const zonesById = Object.fromEntries(zones.map(z => [String(z.id), z]));
+
+                        lista.querySelectorAll(".boton-editar-zona").forEach(button => {
+                            button.addEventListener("click", () => {
+                                const zona = zonesById[button.dataset.id];
+                                ejecutarPorCondicion(zona, {
+                                    true: () => {
+                                        document.getElementById("zone-id").value = zona.id;
+                                        document.getElementById("zone-name").value = zona.name;
+                                        document.getElementById("zone-location").value = zona.location;
+                                        document.getElementById("zone-description").value = zona.description;
+                                        document.getElementById("zone-image").value = zona.image || "";
+                                        document.getElementById("titulo-form-zona").textContent = `Editando cartilla: ${zona.name}`;
+
+                                        const asociados = new Set((zona.birdIds || []).map(Number));
+                                        document.querySelectorAll('input[name="zoneBirdIds"]').forEach(cb => {
+                                            cb.checked = asociados.has(Number(cb.value));
+                                        });
+                                    }
+                                });
+                            });
+                        });
+
+                        lista.querySelectorAll(".boton-eliminar-zona").forEach(button => {
+                            button.addEventListener("click", async () => {
+                                const zoneId = Number(button.dataset.id);
+                                try {
+                                    const delResponse = await fetch(`${API_URL}/zones/${encodeURIComponent(zoneId)}`, {
+                                        method: "DELETE",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify({ userId: state.user.id })
+                                    });
+
+                                    const data = await delResponse.json();
+                                    await ejecutarPorCondicion(delResponse.ok, {
+                                        false: () => alert(data.message || "No se pudo eliminar la cartilla."),
+                                        true: async () => {
+                                            alert(data.message || "Cartilla eliminada.");
+                                            await renderAdminZones();
+                                        }
+                                    });
+                                } catch (error) {
+                                    console.error(error);
+                                    alert("Error al eliminar la cartilla.");
+                                }
+                            });
+                        });
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+                lista.innerHTML = "<p>Error al cargar las cartillas de zonas.</p>";
+            }
+        }
+    });
+}
+function limpiarFormularioZona() {
+    const formZona = document.getElementById("form-admin-zona");
+    ejecutarPorCondicion(formZona, {
+        true: () => {
+            formZona.reset();
+            document.getElementById("zone-id").value = "";
+            document.getElementById("titulo-form-zona").textContent = "Agregar nueva cartilla de zona";
+        }
+    });
+}
+
+async function conectarAdmin() {
+    await cargarSelectorAvesAdmin();
+    await renderAdminZones();
+
+    const formAve = document.getElementById("form-admin-ave");
+    const formZona = document.getElementById("form-admin-zona");
+    const btnCancelarEdicion = document.getElementById("btn-cancelar-zona");
+
+    ejecutarPorCondicion(btnCancelarEdicion, {
+        true: () => {
+            btnCancelarEdicion.addEventListener("click", limpiarFormularioZona);
+        }
+    });
+
+    ejecutarPorCondicion(formAve, {
+        true: () => {
+            formAve.addEventListener("submit", async event => {
+                event.preventDefault();
+
+                const payload = {
+                    userId: state.user.id,
+                    commonName: document.getElementById("bird-common-name").value.trim(),
+                    scientificName: document.getElementById("bird-scientific-name").value.trim(),
+                    author: document.getElementById("bird-author").value.trim(),
+                    family: document.getElementById("bird-family").value.trim(),
+                    altitudinalRange: document.getElementById("bird-altitudinal-range").value.trim(),
+                    size: document.getElementById("bird-size").value.trim(),
+                    sexualDimorphism: document.getElementById("bird-sexual-dimorphism").value.trim(),
+                    habitat: document.getElementById("bird-habitat").value.trim(),
+                    presenceType: document.getElementById("bird-presence-type").value.trim(),
+                    localName: document.getElementById("bird-local-name").value.trim(),
+                    feeding: document.getElementById("bird-feeding").value.trim(),
+                    additionalData: document.getElementById("bird-additional-data").value.trim(),
+                    image: document.getElementById("bird-image").value.trim()
+                };
+
+                try {
+                    const response = await fetch(`${API_URL}/birds`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const data = await response.json();
+
+                    await ejecutarPorCondicion(response.ok, {
+                        false: () => alert(data.message || "No se pudo registrar el ave."),
+                        true: async () => {
+                            alert(data.message || "Ave registrada correctamente.");
+                            formAve.reset();
+                            await cargarSelectorAvesAdmin();
+                        }
+                    });
+                } catch (error) {
+                    console.error(error);
+                    alert("Error al conectar con el servidor.");
+                }
+            });
+        }
+    });
+
+    ejecutarPorCondicion(formZona, {
+        true: () => {
+            formZona.addEventListener("submit", async event => {
+                event.preventDefault();
+
+                const zoneId = document.getElementById("zone-id").value.trim();
+                const birdIds = Array.from(
+                    document.querySelectorAll('input[name="zoneBirdIds"]:checked')
+                ).map(cb => Number(cb.value));
+
+                const payload = {
+                    userId: state.user.id,
+                    name: document.getElementById("zone-name").value.trim(),
+                    location: document.getElementById("zone-location").value.trim(),
+                    description: document.getElementById("zone-description").value.trim(),
+                    image: document.getElementById("zone-image").value.trim(),
+                    birdIds
+                };
+
+                const requestByMode = {
+                    false: { url: `${API_URL}/zones`, method: "POST" },
+                    true: { url: `${API_URL}/zones/${encodeURIComponent(zoneId)}`, method: "PUT" }
+                };
+
+                const { url, method } = requestByMode[Boolean(zoneId)];
+
+                try {
+                    const response = await fetch(url, {
+                        method,
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const data = await response.json();
+
+                    await ejecutarPorCondicion(response.ok, {
+                        false: () => alert(data.message || "No se pudo guardar la cartilla."),
+                        true: async () => {
+                            alert(data.message || "Cartilla guardada correctamente.");
+                            limpiarFormularioZona();
+                            await renderAdminZones();
+                        }
+                    });
+                } catch (error) {
+                    console.error(error);
+                    alert("Error al conectar con el servidor.");
+                }
+            });
+        }
+    });
+}
+
+// ==================================================
+// 12. INICIAR SESIÓN
+// ==================================================
+
+function conectarLogin() {
+    const formulario = document.getElementById("form-login");
+
+    ejecutarPorCondicion(formulario, {
+        false: () => {
+            console.error("No se encontró el formulario form-login en login.html");
+        },
+        true: () => {
+            formulario.addEventListener("submit", async event => {
+                event.preventDefault();
+
+                const email = document.getElementById("email").value.trim();
+                const password = document.getElementById("password").value;
+
+                try {
+                    const response = await fetch(`${API_URL}/users/login`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+
+                    ejecutarPorCondicion(response.ok, {
+                        false: () => {
+                            alert(data.message || "No se pudo iniciar sesión.");
+                        },
+                        true: () => {
+                            ejecutarPorCondicion(data.user, {
+                                false: () => {
+                                    alert("El servidor no devolvió los datos del usuario.");
+                                },
+                                true: () => {
+                                    state.user = data.user;
+                                    localStorage.setItem("user", JSON.stringify(data.user));
+
+                                    updateSessionState();
+                                    const strategy = getRoleStrategy(data.user.role);
+                                    window.location.hash = strategy.defaultRoute;
+                                }
+                            });
+                        }
+                    });
+                } catch (error) {
+                    console.error(error);
+                    alert("No se pudo conectar con el servidor.");
+                }
+            });
+        }
+    });
+}
+
+// ==================================================
+// 13. REGISTRAR USUARIO
 // ==================================================
 
 function conectarRegistro() {
     const formulario = document.getElementById("form-registro");
 
-    if (!formulario) {
-        console.error("No se encontró el formulario form-registro en registro.html");
-        return;
-    }
+    ejecutarPorCondicion(formulario, {
+        false: () => {
+            console.error("No se encontró el formulario form-registro en registro.html");
+        },
+        true: () => {
+            formulario.addEventListener("submit", async event => {
+                event.preventDefault();
 
-    formulario.addEventListener("submit", async event => {
-        event.preventDefault();
+                const name = document.getElementById("name").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const password = document.getElementById("password").value;
 
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
+                try {
+                    const response = await fetch(`${API_URL}/users/register`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            name,
+                            email,
+                            password
+                        })
+                    });
 
-        try {
-            const response = await fetch(`${API_URL}/users/register`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    password
-                })
+                    const data = await response.json();
+
+                    ejecutarPorCondicion(response.ok, {
+                        false: () => {
+                            alert(data.message || "No se pudo crear la cuenta.");
+                        },
+                        true: () => {
+                            alert("Cuenta creada con éxito. Inicia sesión para continuar.");
+                            window.location.hash = "#/login";
+                        }
+                    });
+                } catch (error) {
+                    console.error(error);
+                    alert("No se pudo conectar con el servidor.");
+                }
             });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                alert(data.message || "No se pudo crear la cuenta.");
-                return;
-            }
-
-            alert("Cuenta creada con éxito. Inicia sesión para continuar.");
-            window.location.hash = "#/login";
-        } catch (error) {
-            console.error(error);
-            alert("No se pudo conectar con el servidor.");
         }
     });
 }
