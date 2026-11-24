@@ -26,7 +26,7 @@
                     <input type="text" id="bird-family" required placeholder="Ej: Momotidae">
                 </div>
 
-                <div class="campo-formulario">
+                    <div class="campo-formulario">
                     <label for="bird-altitudinal-range">Rango altitudinal</label>
                     <input type="text" id="bird-altitudinal-range" placeholder="Ej: 1500 - 3100 m">
                 </div>
@@ -38,7 +38,11 @@
 
                 <div class="campo-formulario">
                     <label for="bird-sexual-dimorphism">Dimorfismo sexual</label>
-                    <input type="text" id="bird-sexual-dimorphism" placeholder="Sí / No">
+                    <select id="bird-sexual-dimorphism">
+                        <option value="" disabled selected>Selecciona una opción</option>
+                        <option value="Sí">Sí</option>
+                        <option value="No">No</option>
+                    </select>
                 </div>
 
                 <div class="campo-formulario">
@@ -48,7 +52,12 @@
 
                 <div class="campo-formulario">
                     <label for="bird-presence-type">Tipo de presencia</label>
-                    <input type="text" id="bird-presence-type" placeholder="Residente / Endémica / Migratoria">
+                    <select id="bird-presence-type">
+                        <option value="" disabled selected>Selecciona una opción</option>
+                        <option value="Residente">Residente</option>
+                        <option value="Endémica">Endémica</option>
+                        <option value="Migratoria">Migratoria</option>
+                    </select>
                 </div>
 
                 <div class="campo-formulario">

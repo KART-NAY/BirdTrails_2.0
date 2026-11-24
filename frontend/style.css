@@ -114,6 +114,7 @@ nav a:hover {
     font-weight: bold;
     cursor: pointer;
     border: none;
+    margin-top: 10px;
     transition: background-color 0.3s ease;
 }
 
@@ -352,9 +353,11 @@ nav a:hover {
         min-height: 44px;
     }
 }
+
 /* LISTA DE AVES EN CARTILLA DE ZONA */
 .aves-zona {
     margin-top: 12px;
+    margin-bottom: 14px;
     padding: 10px 14px;
     background-color: #f4f8f4;
     border-left: 3px solid #2e7d32;
@@ -394,7 +397,7 @@ nav a:hover {
     );
     gap: 25px;
     align-items: stretch;
-}
+}   
 
 .ruta {
     min-width: 0;
@@ -405,12 +408,15 @@ nav a:hover {
     display: flex;
     flex-direction: column;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
 }
+
 
 .ruta:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
+
 
 /* Imágenes completas sin recorte */
 
@@ -428,8 +434,9 @@ nav a:hover {
 /* Contenedor de códigos QR */
 
 .qr-container {
+    align-items: block;
     text-align: center;
-    margin-top: 15px;
+    margin-top: auto;
     background-color: #f9f9f9;
     padding: 10px;
     border-radius: 8px;

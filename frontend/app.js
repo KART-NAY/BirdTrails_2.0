@@ -204,6 +204,11 @@ async function router() {
 
     const specialRoutes = {
         "#/logout": async () => {
+            const confirmar = confirm("¿Deseas cerrar sesión?");
+            if (!confirmar) {
+                window.history.back();
+                return;
+            }
             localStorage.removeItem("user");
             state.user = null;
             updateSessionState();
@@ -424,13 +429,13 @@ function crearHtmlCartillaZona(zone, extraActionsHtml = "", birdsMap = {}) {
                 ${listaAvesHtml}
             </div>
 
-            <a
-                href="${mapsData.url}"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="boton"
-                style="display:inline-block; margin-top:10px;">
-                📍 Ver en Google Maps
+             <a
+        href="${mapsData.url}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="boton"
+        style="display:block; margin-top:auto; text-align:center;">
+     📍 Ver en Google Maps
             </a>
 
             <div class="qr-container">
